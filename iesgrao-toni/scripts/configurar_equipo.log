@@ -1,0 +1,240 @@
+#############################################################################
+Empieza la configuración del equipo:lun 03 jun 2024 12:57:50 CEST
+#############################################################################
+
+Aula: 82
+PC:0
+Nombre del equipo:aula082pc00
+Mostramos la configuración por si quiere seguir o salir
+Configuración del PC profesor
+No hay NAT
+ipclase=192.168.82.101/24
+redclase=192.168.82.0/24
+redclase_sin=192.168.82.0
+gwclase=192.168.82.100
+server=192.168.82.101
+Borrando todas la configuración de red del NetworkManager
+La conexión «Conexión cableada 1» (52f45405-d8a3-3a0e-9120-1a93f709fbb5) se ha borrado correctamente.
+Configurando la red de clase en el ordenador
+Conexión «RedClase» (eb5f335c-eb56-4fb0-99a2-bf69174f1df1) añadida con éxito.
+Conexión activada con éxito (ruta activa D-Bus: /org/freedesktop/NetworkManager/ActiveConnection/4)
+Eliminando epoptes cliente, igual ya está elimnado
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Leyendo lista de paquetes...
+Creando árbol de dependencias...
+Leyendo la información de estado...
+Los paquetes indicados a continuación se instalaron de forma automática y ya no son necesarios.
+  libwmf0.2-7 libwpe-1.0-1 libwpebackend-fdo-1.0-1 linux-headers-5.15.0-88
+  linux-headers-5.15.0-89 linux-headers-5.15.0-91
+  linux-headers-5.15.0-91-generic linux-image-5.15.0-91-generic
+  linux-modules-5.15.0-91-generic linux-modules-extra-5.15.0-91-generic screen
+Utilice «apt autoremove» para eliminarlos.
+Los siguientes paquetes se ELIMINARÁN:
+  epoptes-client
+0 actualizados, 0 nuevos se instalarán, 1 para eliminar y 2 no actualizados.
+Se liberarán 106 kB después de esta operación.
+(Leyendo la base de datos ... (Leyendo la base de datos ... 5%(Leyendo la base de datos ... 10%(Leyendo la base de datos ... 15%(Leyendo la base de datos ... 20%(Leyendo la base de datos ... 25%(Leyendo la base de datos ... 30%(Leyendo la base de datos ... 35%(Leyendo la base de datos ... 40%(Leyendo la base de datos ... 45%(Leyendo la base de datos ... 50%(Leyendo la base de datos ... 55%(Leyendo la base de datos ... 60%(Leyendo la base de datos ... 65%(Leyendo la base de datos ... 70%(Leyendo la base de datos ... 75%(Leyendo la base de datos ... 80%(Leyendo la base de datos ... 85%(Leyendo la base de datos ... 90%(Leyendo la base de datos ... 95%(Leyendo la base de datos ... 100%(Leyendo la base de datos ... 799900 ficheros o directorios instalados actualmente.)
+Desinstalando epoptes-client (22.01-1) ...
+Procesando disparadores para man-db (2.10.2-1) ...
+Creando restricciones addons profes
+userdel: el usuario «alumno» no existe
+userdel: alumnom mail spool (/var/mail/alumnom) not found
+userdel: alumnot mail spool (/var/mail/alumnot) not found
+userdel: el usuario «ci1» no existe
+userdel: el usuario «ci2» no existe
+userdel: el usuario «tr1» no existe
+userdel: el usuario «tr2» no existe
+Created symlink /etc/systemd/system/multi-user.target.wants/iconointernet.service → /etc/systemd/system/iconointernet.service.
+comprobamos la conexión 
+Parece que hay conexion
+Actualizando paquetes (apt update), si da error es que no hay conexión a internet
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Obj:1 https://ftp.csuc.cat/ubuntu/archieve jammy InRelease
+Obj:2 https://download.virtualbox.org/virtualbox/debian jammy InRelease
+Des:3 https://ftp.csuc.cat/ubuntu/archieve jammy-updates InRelease [128 kB]
+Des:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Des:5 https://dl.google.com/linux/chrome/deb stable InRelease [1.825 B]
+Des:6 https://ftp.csuc.cat/ubuntu/archieve jammy-backports InRelease [127 kB]
+Des:7 https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/jammy pgadmin4 InRelease [4.217 B]
+Ign:8 http://packages.linuxmint.com vera InRelease
+Des:9 http://packages.linuxmint.com vera Release [24,1 kB]
+Des:10 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/main i386 Packages [633 kB]
+Des:11 http://packages.linuxmint.com vera Release.gpg [833 B]
+Des:12 https://dl.google.com/linux/chrome/deb stable/main amd64 Packages [1.087 B]
+Des:13 https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/jammy pgadmin4/main amd64 Packages [4.352 B]
+Des:14 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/main amd64 Packages [1.686 kB]
+Des:15 https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/jammy pgadmin4/main all Packages [2.356 B]
+Des:16 http://security.ubuntu.com/ubuntu jammy-security/main i386 Packages [471 kB]
+Des:17 http://packages.linuxmint.com vera/upstream amd64 Packages [48,3 kB]
+Des:18 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/main Translation-en [313 kB]
+Des:19 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/main amd64 DEP-11 Metadata [103 kB]
+Des:20 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/restricted amd64 DEP-11 Metadata [212 B]
+Des:21 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/universe amd64 Packages [1.076 kB]
+Des:22 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/universe i386 Packages [703 kB]
+Des:23 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1.475 kB]
+Des:24 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/universe Translation-en [247 kB]
+Des:25 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/universe amd64 DEP-11 Metadata [341 kB]
+Des:26 https://ftp.csuc.cat/ubuntu/archieve jammy-updates/multiverse amd64 DEP-11 Metadata [940 B]
+Des:27 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/main amd64 Packages [67,1 kB]
+Des:28 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/main i386 Packages [59,3 kB]
+Des:29 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/main amd64 DEP-11 Metadata [6.772 B]
+Des:30 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/restricted amd64 DEP-11 Metadata [212 B]
+Des:31 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/universe amd64 Packages [27,2 kB]
+Des:32 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/universe i386 Packages [16,0 kB]
+Des:33 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/universe amd64 DEP-11 Metadata [21,1 kB]
+Des:34 https://ftp.csuc.cat/ubuntu/archieve jammy-backports/multiverse amd64 DEP-11 Metadata [212 B]
+Des:35 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [254 kB]
+Des:36 http://security.ubuntu.com/ubuntu jammy-security/main amd64 DEP-11 Metadata [43,2 kB]
+Des:37 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 DEP-11 Metadata [208 B]
+Des:38 http://security.ubuntu.com/ubuntu jammy-security/universe i386 Packages [604 kB]
+Des:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [854 kB]
+Des:40 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [165 kB]
+Des:41 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 DEP-11 Metadata [89,2 kB]
+Des:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 DEP-11 Metadata [208 B]
+Descargados 9.727 kB en 3s (3.566 kB/s)
+Leyendo lista de paquetes...
+Creando árbol de dependencias...
+Leyendo la información de estado...
+Se pueden actualizar 107 paquetes. Ejecute «apt list --upgradable» para verlos.
+Instalacion de ubuntu-drivers install, si falla ejecutalo despues de reiniciar con conexion a internet. La orden es: sudo ubuntu-drivers install
+instalando ubuntu-drivers install:
+All the available drivers are already installed.
+si sale un error de dependencias con virtualbox lo puedes ignorar
+Cambiando nombre de equipo
+elimina las lineas de hosts para el cambio de nombre
+añade las lineas de host
+borra y genera las claves ssh de nuevo
+Borrando claves ssh
+Generando las claves ssh de nuevo
+ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519 
+Inventariando
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Leyendo lista de paquetes...
+Creando árbol de dependencias...
+Leyendo la información de estado...
+Los paquetes indicados a continuación se instalaron de forma automática y ya no son necesarios.
+  libwmf0.2-7 libwpe-1.0-1 libwpebackend-fdo-1.0-1 linux-headers-5.15.0-88
+  linux-headers-5.15.0-89 linux-headers-5.15.0-91
+  linux-headers-5.15.0-91-generic linux-image-5.15.0-91-generic
+  linux-modules-5.15.0-91-generic linux-modules-extra-5.15.0-91-generic screen
+Utilice «sudo apt autoremove» para eliminarlos.
+Se instalarán los siguientes paquetes adicionales:
+  libfile-which-perl libnet-cups-perl libnet-ip-perl libparse-edid-perl
+  libproc-daemon-perl libsocket-getaddrinfo-perl libuniversal-require-perl
+  libxml-treepp-perl libyaml-perl
+Paquetes sugeridos:
+  read-edid libyaml-shell-perl
+Se instalarán los siguientes paquetes NUEVOS:
+  fusioninventory-agent libfile-which-perl libnet-cups-perl libnet-ip-perl
+  libparse-edid-perl libproc-daemon-perl libsocket-getaddrinfo-perl
+  libuniversal-require-perl libxml-treepp-perl libyaml-perl
+0 actualizados, 10 nuevos se instalarán, 0 para eliminar y 107 no actualizados.
+Se necesita descargar 553 kB de archivos.
+Se utilizarán 2.707 kB de espacio de disco adicional después de esta operación.
+Des:1 https://ftp.csuc.cat/ubuntu/archieve jammy/main amd64 libfile-which-perl all 1.23-1 [13,8 kB]
+Des:2 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 libnet-cups-perl amd64 0.64-1build4 [52,5 kB]
+Des:3 https://ftp.csuc.cat/ubuntu/archieve jammy/main amd64 libnet-ip-perl all 1.26-2 [27,4 kB]
+Des:4 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 libparse-edid-perl all 1.0.7-1.1 [11,2 kB]
+Des:5 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 libproc-daemon-perl all 0.23-1 [19,5 kB]
+Des:6 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 libsocket-getaddrinfo-perl all 0.22-3 [36,0 kB]
+Des:7 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 libuniversal-require-perl all 0.19-1 [9.236 B]
+Des:8 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 libxml-treepp-perl all 0.43-1 [18,6 kB]
+Des:9 https://ftp.csuc.cat/ubuntu/archieve jammy/main amd64 libyaml-perl all 1.30-1 [58,2 kB]
+Des:10 https://ftp.csuc.cat/ubuntu/archieve jammy/universe amd64 fusioninventory-agent all 1:2.6-2 [307 kB]
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+debconf: no se pudo inicializar la interfaz: Readline
+debconf: (Esta interfaz requiere un terminal que la controle.)
+debconf: probando ahora la interfaz: Teletype
+dpkg-preconfigure: no puedo re-abrir stdin: 
+Descargados 553 kB en 2s (238 kB/s)
+Seleccionando el paquete libfile-which-perl previamente no seleccionado.
+(Leyendo la base de datos ... (Leyendo la base de datos ... 5%(Leyendo la base de datos ... 10%(Leyendo la base de datos ... 15%(Leyendo la base de datos ... 20%(Leyendo la base de datos ... 25%(Leyendo la base de datos ... 30%(Leyendo la base de datos ... 35%(Leyendo la base de datos ... 40%(Leyendo la base de datos ... 45%(Leyendo la base de datos ... 50%(Leyendo la base de datos ... 55%(Leyendo la base de datos ... 60%(Leyendo la base de datos ... 65%(Leyendo la base de datos ... 70%(Leyendo la base de datos ... 75%(Leyendo la base de datos ... 80%(Leyendo la base de datos ... 85%(Leyendo la base de datos ... 90%(Leyendo la base de datos ... 95%(Leyendo la base de datos ... 100%(Leyendo la base de datos ... 799882 ficheros o directorios instalados actualmente.)
+Preparando para desempaquetar .../0-libfile-which-perl_1.23-1_all.deb ...
+Desempaquetando libfile-which-perl (1.23-1) ...
+Seleccionando el paquete libnet-cups-perl previamente no seleccionado.
+Preparando para desempaquetar .../1-libnet-cups-perl_0.64-1build4_amd64.deb ...
+Desempaquetando libnet-cups-perl (0.64-1build4) ...
+Seleccionando el paquete libnet-ip-perl previamente no seleccionado.
+Preparando para desempaquetar .../2-libnet-ip-perl_1.26-2_all.deb ...
+Desempaquetando libnet-ip-perl (1.26-2) ...
+Seleccionando el paquete libparse-edid-perl previamente no seleccionado.
+Preparando para desempaquetar .../3-libparse-edid-perl_1.0.7-1.1_all.deb ...
+Desempaquetando libparse-edid-perl (1.0.7-1.1) ...
+Seleccionando el paquete libproc-daemon-perl previamente no seleccionado.
+Preparando para desempaquetar .../4-libproc-daemon-perl_0.23-1_all.deb ...
+Desempaquetando libproc-daemon-perl (0.23-1) ...
+Seleccionando el paquete libsocket-getaddrinfo-perl previamente no seleccionado.
+Preparando para desempaquetar .../5-libsocket-getaddrinfo-perl_0.22-3_all.deb ...
+Desempaquetando libsocket-getaddrinfo-perl (0.22-3) ...
+Seleccionando el paquete libuniversal-require-perl previamente no seleccionado.
+Preparando para desempaquetar .../6-libuniversal-require-perl_0.19-1_all.deb ...
+Desempaquetando libuniversal-require-perl (0.19-1) ...
+Seleccionando el paquete libxml-treepp-perl previamente no seleccionado.
+Preparando para desempaquetar .../7-libxml-treepp-perl_0.43-1_all.deb ...
+Desempaquetando libxml-treepp-perl (0.43-1) ...
+Seleccionando el paquete libyaml-perl previamente no seleccionado.
+Preparando para desempaquetar .../8-libyaml-perl_1.30-1_all.deb ...
+Desempaquetando libyaml-perl (1.30-1) ...
+Seleccionando el paquete fusioninventory-agent previamente no seleccionado.
+Preparando para desempaquetar .../9-fusioninventory-agent_1%3a2.6-2_all.deb ...
+Desempaquetando fusioninventory-agent (1:2.6-2) ...
+Configurando libfile-which-perl (1.23-1) ...
+Configurando libuniversal-require-perl (0.19-1) ...
+Configurando libyaml-perl (1.30-1) ...
+Configurando libnet-cups-perl (0.64-1build4) ...
+Configurando libproc-daemon-perl (0.23-1) ...
+Configurando libxml-treepp-perl (0.43-1) ...
+Configurando libparse-edid-perl (1.0.7-1.1) ...
+Configurando libsocket-getaddrinfo-perl (0.22-3) ...
+Configurando libnet-ip-perl (1.26-2) ...
+Configurando fusioninventory-agent (1:2.6-2) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/fusioninventory-agent.service → /lib/systemd/system/fusioninventory-agent.service.
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+
+Creating config file /etc/fusioninventory/agent.cfg with new version
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+
+Creating config file /etc/fusioninventory/inventory-server-plugin.cfg with new version
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+
+Creating config file /etc/fusioninventory/ssl-server-plugin.cfg with new version
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+
+Creating config file /etc/fusioninventory/server-test-plugin.cfg with new version
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+
+Creating config file /etc/fusioninventory/proxy-server-plugin.cfg with new version
+debconf: no se pudo inicializar la interfaz: Dialog
+debconf: (La interfaz «dialog» no funcionará en un terminal tonto, un búfer de intérprete de órdenes de emacs, o sin una terminal controladora.)
+debconf: probando ahora la interfaz: Readline
+
+Creating config file /etc/fusioninventory/proxy2-server-plugin.cfg with new version
+Procesando disparadores para man-db (2.10.2-1) ...
+[info] target server0: server http://inventario.apografis.edu.gva.es/apografis/plugins/fusioninventory/
+[info] sending prolog request to server0
+[info] running task Inventory
+[info] New inventory from aula082pc00-2024-06-03-12-58-44 for server0
+[info] 'scan-homedirs' configuration parameters disabled, ignoring virtualbox virtual machines in user directories
+Inventariando correctamente
+Si no hay errores reinicie el PC e invite a Toni a una cerveza
+#############################################################################
+Se ha terminado de ejecutar el script: lun 03 jun 2024 12:58:59 CEST
+#############################################################################

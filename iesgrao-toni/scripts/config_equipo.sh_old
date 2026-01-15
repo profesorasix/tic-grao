@@ -1,0 +1,551 @@
+#!/bin/bash
+# variables usadas el el script
+aulasinconfig="aulaxxxpc" # Nombre del pc cuando se acaba de clonar
+ignorarinterfaces='^lo$|virbr' # Nombre de las interfaces a ignorar una linea (virt hay que ignorar todas)
+ignorarinterfacesconespacio=' lo$|virbr' # Nombre de las interfaces a ignorar dos lineas (con espacio y virt hay que ignorar todas)
+
+pcprofconnat="false" # configurar el pc del profesor con NAT (true o false) SE PREGUNTA LUEGO
+# ip clase y wan
+clase="192.168"
+wan="192.168.10"
+gwwan="192.168.10.100"
+dns="192.168.10.100 8.8.8.8"
+ipprofe="100" # ip de la puerta de enlace de la LAN
+ipprofesinnat="101"
+mensaje="/scripts/mensaje.txt"
+
+
+# existen tres variables
+# aulacontresdig por ejemplo 024 y se usará para el nombre del PC, por ejemplo aula024pc07
+# aulasinceros por ejemplo 24 y se usará para la configuracion de la red del aula, por ejemplo 192.168.24.0 y en el caso del pc del profesor con dos tarjetas de red y nat se usará de ip externa, por ejemplo 192.168.10.24
+# pccontresdig por 007
+# pccondosdig por ejemplo 07 y se usará para el nombre del PC, por ejemplo aula024pc07
+# pcsinceros por ejemplo 7 y se usará para la configuracion de la ip, por ejemplo 192.168.24.7
+
+# variables para las interfaces, si se modifican estas variables hay que modifcar tb columnwaninterfaces que esta mas abajo
+numinterfaces=$(ip a s | grep ^[0-9] | tr -d " " | cut -d":" -f2 | grep -v -E "$ignorarinterfaces" | wc -l)
+interfaces=$(ip a s | grep ^[0-9] | tr -d " " | cut -d":" -f2 | grep -v -E "$ignorarinterfaces")
+columninterfaces=$(ip a s | grep ^[0-9] | tr -d " " | cut -d":" -f1,2 | tr ":" " " | grep -v -E "$ignorarinterfacesconespacio")
+
+echo "# Iniciando proceso de configuración" > $mensaje
+
+nohup /scripts/progresszenity.sh  & #>/dev/null 2>&1 &
+
+# si ya está configurado el equipo
+echo "#############################################################################"
+echo "Empieza la configuración del equipo:`date`"
+echo "#############################################################################"
+
+
+yaconfigurado=`grep "$aulasinconfig" /etc/hosts | wc -l`
+
+if [ $yaconfigurado -eq 0 ] ; then
+    echo "El equipo ya habia sido configurado"
+    zenity --no-wrap --info --title="Saliendo (1)" --text "El equipo ya ha sido configurado. Vuelva a volcar la imagen o cambie el nombre del equipo con el otro programa. Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+    echo "Se sale de la configuración (1): `date`"
+    exit 0
+fi
+
+
+echo # Elejimos el número de AULA
+
+echo "# Configurando número aula" > $mensaje
+
+correcto=0
+while [ $correcto -eq 0 ]
+do
+    aula=$(zenity --title="Número de aula" --cancel-label="Salir de la configuración" --entry --text "Introduce el numero de aula (tiene que ser mayor a 0, menor que 254 y no puede ser 10):")
+    resp3=$?
+    if [ $resp3 -ne 0 ]; then
+    	zenity --no-wrap --info --title="Saliendo (3)" --text "Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+        echo "Se sale de la configuración (3): `date`"
+        exit 0
+    fi
+
+    tam=`echo -n "$aula" | wc -c`
+    esdigito=0
+    for j in $(seq 1 $tam)
+    do
+	    esdigito=`echo -n "$aula" | cut -c${j} | grep [0-9] | wc -l`
+	    if [ $esdigito -ne 1 ]; then
+            break
+	    fi
+    done
+    if [ $esdigito -ne 1 ]; then
+        zenity --error --no-wrap --title="ERROR" --text "Alguno de los carácteres que has introducido no es un número. \nValor introducido: $aula.\nVuelve a intentarlo "  2> /dev/null
+	elif [ $aula -gt 253 ]; then
+        zenity --error --no-wrap --title="ERROR" --text "El número debe ser menor que 254. \nValor introducido: $aula.\nVuelve a intentarlo "  2> /dev/null
+    elif [ $aula -eq 0 ]; then
+        zenity --error --no-wrap --title="ERROR" --text "El numero debe ser mayor que 0. \nValor introducido: $aula.\nVuelve a intentarlo "  2> /dev/null
+    elif [ $aula -eq 10 ]; then
+        zenity --error --no-wrap --title="ERROR" --text "El número no puede ser 10 ya que es la red del centro. \nValor introducido: $aula.\nVuelve a intentarlo "  2> /dev/null       
+    else
+        if [ $tam -eq 1 ]; then
+            aulacontresdig=00$aula
+            aulasinceros=$aula
+        else
+            #borramos ceros a la izquierda
+            primero=0
+            for j in $(seq 1 $tam)
+            do
+	            digito=`echo -n "$aula" | cut -c${j}`
+	            if [ $digito -eq 0 ]; then
+                    if [ $primero -ne 0 ]; then
+                        aulasinceros=$aulasinceros$digito
+                    fi
+	            else
+                    aulasinceros=$aulasinceros$digito
+                    primero=1
+                fi
+            done
+            tam2=`echo -n "$aulasinceros" | wc -c`
+            if [ $tam2 -eq 1 ]; then
+                aulacontresdig=00$aulasinceros
+            elif [ $tam2 -eq 2 ]; then
+                aulacontresdig=0$aulasinceros
+            else
+                aulacontresdig=$aulasinceros
+            fi
+        fi
+        correcto=1
+    fi
+done
+
+echo "Aula: $aulasinceros"
+
+
+echo "# Configurando número PC" > $mensaje
+# Elejimos el número de PC
+correcto=0
+while [ $correcto -eq 0 ]
+do
+    pc=$(zenity --title="Número de PC" --cancel-label="Salir de la configuración" --entry --text "Introduce el número de PC donde va estar el PC en el aula $aulasinceros (0 para el PC del profesor y el valor debe ser menor a 100)::")
+    resp4=$?
+    if [ $resp4 -ne 0 ]; then
+    	zenity --no-wrap --info --title="Saliendo (4)" --text "Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+        echo "Se sale de la configuración (4): `date`"
+        exit 0
+    fi
+
+    tam=`echo -n "$pc" | wc -c`
+    esdigito=0
+    for j in $(seq 1 $tam)
+    do
+	    esdigito=`echo -n "$pc" | cut -c${j} | grep [0-9] | wc -l`
+	    if [ $esdigito -ne 1 ]; then
+            break
+	    fi
+    done
+    if [ $esdigito -ne 1 ]; then
+        zenity --error --no-wrap --title="ERROR" --text "Alguno de los carácteres que has introducido no es un número. \nValor introducido: $pc.\nVuelve a intentarlo "  2> /dev/null
+	elif [ $pc -gt 99 ]; then
+        zenity --error --no-wrap --title="ERROR" --text "El número debe ser menor que 100. \nValor introducido: $pc.\nVuelve a intentarlo "  2> /dev/null  
+    else
+        if [ $tam -eq 1 ]; then
+            pccontresdig=00$pc
+            pccondosdig=0$pc
+            pcsinceros=$pc
+        else
+            #borramos ceros a la izquierda
+            primero=0
+            for j in $(seq 1 $tam)
+            do
+	            digito=`echo -n "$pc" | cut -c${j}`
+	            if [ $digito -eq 0 ]; then
+                    if [ $primero -ne 0 ]; then
+                        pcsinceros=$pcsinceros$digito
+                    elif [ $j -eq $tam ]; then
+                        pcsinceros=$pcsinceros$digito
+                    fi
+	            else
+                    pcsinceros=$pcsinceros$digito
+                    primero=1
+                fi
+            done
+            tam2=`echo -n "$pcsinceros" | wc -c`
+            if [ $tam2 -eq 1 ]; then
+                pccontresdig=00$pcsinceros
+                pccondosdig=0$pcsinceros
+            else
+                pccontresdig=0$pcsinceros
+                pccondosdig=$pcsinceros
+            fi
+        fi
+        correcto=1
+    fi
+done
+
+echo "PC:$pcsinceros"
+
+nombreequipo=aula${aulacontresdig}pc${pccondosdig}
+
+echo "Nombre del equipo:$nombreequipo"
+
+
+# buscamos para las interfaces de red del profesor
+
+echo "# Configurando interfaces" > $mensaje
+
+if [ $numinterfaces -eq 0 ]; then # No hay interfaz de red
+	zenity --error --no-wrap --title="ERROR" --text "No hay interfaces de red. Comprueba que tengas tarjeta de red y vuelve a intentarlo.\nSaliendo de la configuración del equipo. No se ha efectuado ningún cambio. "  2> /dev/null
+    echo "Se sale de la configuración (error interfaces): `date`"
+	exit 1
+elif [ $numinterfaces -eq 1 ]; then # Solo hay una interfaz de red
+    interfclase=$interfaces
+else # hay mas de una interfaz de red
+    if [ $pcsinceros -eq 0 ]; then # Es el PC del profesor
+	pcprofconnat="false"
+
+        # Tiene que elegir una interfaz
+        salir="false"
+        while [ $salir == "false" ]
+        do
+            interfclase=$(zenity --list --title="Interfaz Clase"  --ok-label="Aceptar" --cancel-label="Salir de la configuración" --text="Selecciona una interfaz para la red de clase:" --radiolist --column="" --column="Interfaces" $columninterfaces)
+            resp7=$?
+            if [ $resp7 -eq 0 ]; then
+                if [ $interfclase ]; then
+                    salir="true"
+                fi
+            else
+                zenity --no-wrap --info --title="Saliendo (5)" --text "Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+                echo "Se sale de la configuración (5): `date`"
+                exit 2
+            fi
+        done   
+
+    else # NO es el PC del profesor
+        # elija una interfaz para la red de clase
+        echo  "Tiene que elegir una interfaz"
+        salir="false"
+        while [ $salir == "false" ]
+        do
+                interfclase=$(zenity --list --title="Interfaz Clase"  --ok-label="Aceptar" --cancel-label="Salir de la configuración" --text="Selecciona una interfaz para la red de clase:" --radiolist --column="" --column="Interfaces" $columninterfaces)
+                resp7=$?
+                if [ $resp7 -eq 0 ]; then
+                    if [ $interfclase ]; then
+                        salir="true"
+                    fi
+                else
+                    zenity --no-wrap --info --title="Saliendo (17)" --text "Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+                    echo "Se sale de la configuración (17): `date`"
+                    exit 2
+                fi
+        done   
+    fi
+
+fi    
+
+echo "Mostramos la configuración por si quiere seguir o salir"
+
+echo "# Mostrando configuración elegida" > $mensaje
+
+if [ $pcsinceros -eq 0 ]; then # Es el PC del profesor
+    echo "Configuración del PC profesor"
+    if [ $pcprofconnat == "false" ]; then # Si no hay NAT 
+        echo "No hay NAT"
+        ipclase=$clase.$aulasinceros.$ipprofesinnat/24
+        redclase=$clase.$aulasinceros.0/24
+        redclase_sin=$clase.$aulasinceros.0
+        gwclase=$clase.$aulasinceros.$ipprofe
+        server=$clase.$aulasinceros.$ipprofesinnat
+
+        echo "ipclase=$clase.$aulasinceros.$ipprofesinnat/24"
+        echo "redclase=$clase.$aulasinceros.0/24"
+        echo "redclase_sin=$clase.$aulasinceros.0"
+        echo "gwclase=$clase.$aulasinceros.$ipprofe"
+        echo "server=$clase.$aulasinceros.$ipprofesinnat"
+
+        zenity --no-wrap --question --title="Confirmación" --ok-label="Si" --cancel-label="Salir de la configuración" --text "Esta es la configuración que se aplicará a su equipo: \nNombre del equipo:$nombreequipo \nInterfaz clase:$interfclase \nIP clase:$ipclase \nRed de clase con mascara:$redclase \nRed de clase sin mascara:$redclase_sin \nPuerta de enlace:$gwclase \nDNS:$dns \nServer:$server\nA partir de aquí se empezarán a hacer cambios en el equipo. ¿Está seguro de que quiere continuar? " 2> /dev/null
+        resp8=$?
+        if [ $resp8 -ne 0 ]; then
+            zenity --no-wrap --info --title="Saliendo (18)" --text "Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+            echo "Se sale de la configuración (18): `date`"
+            exit 0
+        fi
+    fi
+else # No es el PC del profesor
+    echo "Configuración del PC alumno"
+    ipclase=$clase.$aulasinceros.$pcsinceros/24
+    redclase=$clase.$aulasinceros.0/24
+    redclase_sin=$clase.$aulasinceros.0
+    gwclase=$clase.$aulasinceros.$ipprofe
+
+    echo "ipclase=$clase.$aulasinceros.$pcsinceros/24"
+    echo "redclase=$clase.$aulasinceros.0/24"
+    echo "redclase_sin=$clase.$aulasinceros.0"
+    echo "gwclase=$clase.$aulasinceros.$ipprofe"
+
+    server=$clase.$aulasinceros.$ipprofesinnat
+    echo "server=$clase.$aulasinceros.$ipprofesinnat"
+
+
+    zenity --no-wrap --question --title="Confirmación" --ok-label="Si" --cancel-label="Salir de la configuración" --text "Esta es la configuración que se aplicará a su equipo: \nNombre del equipo:$nombreequipo  \nInterfaz clase:$interfclase \nIP clase:$ipclase \nRed de clase con mascara:$redclase \nRed de clase sin mascara:$redclase_sin \nPuerta de enlace:$gwclase \nDNS:$dns \nServer:$server\nA partir de aquí se empezarán a hacer cambios en el equipo. ¿Está seguro de que quiere continuar? \nAcuerdate que el PC del profesor debe estar clonado, configurado y accesible en la red->$server" 2> /dev/null 
+    resp10=$?
+    if [ $resp10 -ne 0 ]; then
+         zenity --no-wrap --info --title="Saliendo (8)" --text "Saliendo de la configuración del equipo. No se ha efectuado ningún cambio. \nRevise el log /scripts/configurar_equipo.log"  2> /dev/null
+         echo "Se sale de la configuración (8): `date`"
+         exit 0
+    fi
+fi
+
+echo "# Borrando todas la configuración de red del NetworkManager" > $mensaje
+
+echo "Borrando todas la configuración de red del NetworkManager"
+for i in `nmcli c | grep "ethernet" | grep -o -- "[0-9a-fA-F]\{8\}-[0-9a-fA-F]\{4\}-[0-9a-fA-F]\{4\}-[0-9a-fA-F]\{4\}-[0-9a-fA-F]\{12\}"`
+do 
+   nmcli connection delete uuid $i
+   resp20=$?
+   if [ $resp20 -ne 0 ]; then
+         zenity --no-wrap --error --title="Warning NetworkmManager" --text "Error borrando la configuración de la interfaz $i.  \nRevise el log /scripts/configurar_equipo.log. \nPulse aceptar para continuar ejecutando el script"  2> /dev/null
+         echo "Error borrando la configuración de la interfaz $i"
+   fi
+done
+
+
+
+
+echo "# Configurando NetworkManager" > $mensaje
+
+
+
+echo "Configurando la red de clase en el ordenador"
+nmcli con add type ethernet con-name RedClase ifname $interfclase ip4 $ipclase gw4 $gwclase ipv4.dns "$dns" ipv6.method disabled
+resp32=$?
+if [ $resp32 -ne 0 ]; then
+   zenity --no-wrap --error --title="Error red clase" --text "Error creando la red de clase en el NetworkmManager.  \nRevise el log /scripts/configurar_equipo.log. \nPulse aceptar para continuar ejecutando el script"  2> /dev/null
+   echo "Error creando la red de clase en el NetworkmManager"
+fi
+
+# levantamos la interfaz
+nmcli connection up RedClase
+resp32=$?
+if [ $resp32 -ne 0 ]; then
+   zenity --no-wrap --error --title="Error levantando red clase" --text "Error levantando la red de clase en el NetworkmManager.  \nRevise el log /scripts/configurar_equipo.log. \nPulse aceptar para continuar ejecutando el script"  2> /dev/null
+   echo "Error levantando la red de clase en el NetworkmManager"
+fi
+
+# configurando el networkmanager solo para administradores
+cp /scripts/10-network-manager-alumnos.pkla /var/lib/polkit-1/localauthority/50-local.d/ 
+
+
+if [ $pcsinceros -eq 0 ]; then
+    echo "# Eliminando cliente epoptes" > $mensaje
+
+    echo "Eliminando epoptes cliente, igual ya está elimnado"
+    apt remove -y epoptes-client 
+    
+    echo "Creando restricciones addons profes"
+    rm -f /etc/opt/chrome/policies/managed/chrome_allowlist_policy.json
+    rm -f /etc/opt/chrome/policies/managed/chrome_blocklist_policy.json
+    # viejo
+    rm -f /usr/lib/firefox/distribution/policies.json 
+    # nuevo
+    rm -f /etc/firefox/policies/policies.json 
+
+    # Eliminamos las cuentas de los alumnos
+    userdel -f -r alumno
+    userdel -f -r alumnom
+    userdel -f -r alumnot
+    userdel -f -r ci1
+    userdel -f -r ci2
+    userdel -f -r tr1
+    userdel -f -r tr2
+
+    # activamos el servicio  systemctl icono
+    systemctl enable iconointernet.service 
+
+else
+    echo "# Eliminando epoptes server" > $mensaje
+
+    apt remove -y epoptes
+    # dpkg -i /scripts/epoptes-client_20.01-1_all.deb
+    
+    # Eliminamos las cuenta del profesor
+    userdel -f -r profesor
+
+    #rm -f /home/alumno/Escritorio/epoptes.desktop
+    rm -f /home/administrador/Escritorio/epoptes.desktop
+
+    # eliminamos ficheoros (no debria de hacer falta) Silenciamos los errores
+    #rm -f /etc/skel/.config/autostart/cambiar_icono.desktop 2> /dev/null
+    #rm -f /etc/skel/Escritorio/internet_alumnos.desktop 2> /dev/null
+    #rm -f /home/alumno/.config/autostart/cambiar_icono.desktop 2> /dev/null
+    #rm -f /home/alumnom/.config/autostart/cambiar_icono.desktop 2> /dev/null   
+    #rm -f /home/alumnot/.config/autostart/cambiar_icono.desktop 2> /dev/null
+
+    # esto si que hace falta eliminarlo
+    rm -f /home/administrador/.config/autostart/cambiar_icono.desktop 2> /dev/null
+    rm -f /home/administrador/Escritorio/epoptes.desktop 2> /dev/null
+    rm -f /home/administrador/Escritorio/internet_alumnos.desktop 2> /dev/null
+
+    echo "# Eliminando id_rsa" > $mensaje
+    rm -f /scripts/id_rsa
+
+    echo "# Eliminando aplicaciones" > $mensaje
+    mv /usr/share/applications/org.kde.kdeconnect* /usr/share/oldapplications/ 
+
+    mv /usr/share/applications/xtigervncviewer.desktop /usr/share/oldapplications/ 
+
+    mv /usr/share/applications/xviewer.desktop /usr/share/oldapplications/ 
+
+    mv /usr/share/applications/mate-session-properties.desktop /usr/share/oldapplications/ 
+
+    mv /usr/share/applications/screensavers/*.desktop /usr/share/oldapplications/screensavers/ 
+
+    mv /usr/share/applications/mate-appearance-properties.desktop /usr/share/oldapplications/ 
+
+    mv /usr/share/applications/mate-theme-installer.desktop /usr/share/oldapplications/
+
+fi
+
+echo "# Comprobando conexión" > $mensaje
+
+echo "comprobamos la conexión "
+
+if [ $pcsinceros -eq 0 ]; then
+    pcconexion=$gwwan
+else
+    pcconexion=$server
+fi
+
+salida=0
+while [ $salida -eq 0 ]
+do
+	(
+	for j in $(seq 2 10)
+	    do
+	            sleep 1
+		    ping -c 1 $pcconexion 1>/dev/null 2>&1
+		    accesible=$? 
+		    echo "${j}0"
+		    echo "# Buscando equipo $pcconexion mediante ping...intento $j"
+		    sleep 1
+		    if [ $accesible -eq 0 ]; then
+			echo "99"
+			echo "# Se ha encontrado el equipo $pcconexion"
+			sleep 4
+			echo "100"
+			echo "# Se ha encontrado el equipo $pcconexion"
+		    	break
+		    fi
+	    done
+	) |
+	zenity --progress --title="Buscando $pcconexion" --text="Buscando equipo $pcconexion mediante ping...intento 1" --auto-close  --percentage=0
+	ping -c 1 $pcconexion 1>/dev/null 2>&1
+	accesible=$?
+	if [ $accesible -eq 1 ] ; then
+		zenity --no-wrap --question --title="No hay conexión con el equipo" --ok-label="Si" --cancel-label="No, salir de la configuración" --text "No hay conexión con el equipo $pcconexion. \nCompruebe que el cable de red esté correctamente instalado. \n¿Quiere volver a intentarlo?" 2> /dev/null
+		resp22=$?
+		if [ $resp22 -ne 0 ]; then
+		    zenity --no-wrap --info --title="Saliendo (10)" --text "Saliendo de la configuración del equipo. Ya se ha efectuado algún cambio.  \nRevise el log /scripts/configurar_equipo.log. \nVuelva a ejecutar el script"  2> /dev/null
+            echo "Se sale de la configuración (10)"
+		    exit 1
+		fi
+	else
+		salida=1
+	fi
+done
+
+
+echo "Parece que hay conexion"
+
+echo "# Actualizando paquetes (apt update)" > $mensaje
+
+
+echo "Actualizando paquetes (apt update), si da error es que no hay conexión a internet"
+
+apt update
+
+
+# no se puede usar $? con apt update, parece que siempre da 0
+
+echo "Instalacion de ubuntu-drivers install, si falla ejecutalo despues de reiniciar con conexion a internet. La orden es: sudo ubuntu-drivers install"
+echo "# Instalando ubuntu-drivers install" > $mensaje
+
+echo "instalando ubuntu-drivers install:"
+# no se si se puede usar $? con ubuntu-drivers install
+
+ubuntu-drivers install
+
+echo "si sale un error de dependencias con virtualbox lo puedes ignorar"
+
+echo "# Cambiando nombre del equipo" > $mensaje
+
+echo "Cambiando nombre de equipo"
+hostnamectl set-hostname $nombreequipo
+if [ $? -ne 0 ]; then
+    # cuando cambias el hostname no va la interfaz grafica de sudo hasta que reinicias
+    sudo -u administrador zenity --no-wrap --error --title="Error hostname" --text "Se ha producido un error cambiando el hostname.  \nRevise el log /scripts/configurar_equipo.log \nPruebe a reiniciar el equipo y ejecutar el comando \nsudo hostnamectl set-hostname $nombreequipo \n Si el problema persiste vuelva a clonar y ejecute el script. Pulse Aceptar para continuar"  2> /dev/null
+    echo "Se ha producido un error cambiando el hostname. Pruebe a reiniciar el equipo y ejecutar el comando: sudo hostnamectl set-hostname $nombreequipo  .Si el problema persiste vuelva a clonar y ejecute el script"
+fi
+
+echo "elimina las lineas de hosts para el cambio de nombre"
+sed -i '/linea_configuracion/d' /etc/hosts
+
+echo "añade las lineas de host"
+echo "127.0.0.1 $nombreequipo # linea_configuracion " | tee -a /etc/hosts > /dev/null
+echo "$server server # linea_configuracion " | tee -a /etc/hosts > /dev/null
+
+echo "# Reiniciando claves ssh" > $mensaje
+
+echo "borra y genera las claves ssh de nuevo"
+echo "Borrando claves ssh"
+rm -f /etc/ssh/ssh_host_*
+echo "Generando las claves ssh de nuevo"
+ssh-keygen -A
+
+if [ $pcsinceros -ne 0 ]; then
+    echo "# Metiendo epoptes cliente en el Server" > $mensaje
+    echo "Empenzando a meter epoptes en el server"
+    epoptes-client -c
+    echo "Fin de meter epoptes en el server"
+fi
+
+# cuando cambias el hostname no va la interfaz grafica de sudo hasta que reinicias
+
+
+sudo -u administrador zenity --no-wrap --question --title="Confirmación" --ok-label="Si" --cancel-label="No" --text "Quiere inventariar en el GLPI (SAI) el equipo $nombreequipo ? (Si el PC es de Conselleria lo normal es inventariarlo)" 2> /dev/null 
+respinv=$?
+if [ $respinv -eq 0 ]; then
+        echo "# Inventariando el equipo..." > $mensaje
+	echo "Inventariando"
+	sudo apt install -y fusioninventory-agent 
+	sudo cp /scripts/agent.cfg /etc/fusioninventory/
+	sudo /usr/bin/fusioninventory-agent
+	salinv=$?
+	if [ $salinv -eq 0 ]; then
+	    echo "# Equipo inventariado correctamente!" > $mensaje
+	    echo "Inventariando correctamente"
+	else
+	    echo "# FALLO al inventariar el equipo!" > $mensaje
+	    sudo -u administrador zenity --no-wrap --error --title="Error al inventariar" --text "Se ha producido un error al inventariar el equipo.  \nRevise el log /scripts/configurar_equipo.log. \nPulse Aceptar para continuar"  2> /dev/null
+	    echo "Error inventariando: $salinv"
+	fi
+fi
+echo "# Ya ha terminado!!!" > $mensaje
+sudo -u administrador zenity --no-wrap --info --title="Finalizado" --text "Revise el fichero log /scripts/configurar_equipo.log por si ha habido algún error. \nSi no hay errores reinicie el PC e invite a Toni a una cerveza"  2> /dev/null
+
+echo "Si no hay errores reinicie el PC e invite a Toni a una cerveza"
+
+# cuando cambias el hsotname no va la interfaz grafica de sudo hasta que reinicias
+
+sudo -u administrador notify-send  -i /scripts/beer2.png "Free beer" "Invita a Toni a una cerveza"
+	
+sleep 3
+
+
+echo "#############################################################################"
+echo "Se ha terminado de ejecutar el script: `date`"
+echo "#############################################################################"
+
+
+
+# falta copiar las policies.json y probarlas
+
+
+
+
+
+
+
+

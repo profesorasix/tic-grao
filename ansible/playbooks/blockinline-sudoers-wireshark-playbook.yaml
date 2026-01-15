@@ -1,0 +1,24 @@
+---
+- name: Allow %students to run wireshark as sudo without validation
+  hosts: my_host_01
+
+  vars_files:
+  - secret
+
+
+  tasks:
+  - name: Allow %students to run wireshark as sudo without validation
+    ansible.builtin.blockinfile:
+      path: /etc/sudoers.d/wireshark
+      create: true
+      state: present
+      insertafter: EOF
+      block: |
+          %students ALL=(ALL) NOPASSWD: /usr/bin/wireshark
+          %ALU_FP_A3 ALL=(ALL) NOPASSWD: /usr/bin/wireshark
+
+  - name: Change perms
+    ansible.builtin.file:
+      path: /etc/sudoers.d/wireshark
+      mode: '0440'
+      state: file

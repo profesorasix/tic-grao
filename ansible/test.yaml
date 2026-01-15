@@ -1,0 +1,12 @@
+---
+- hosts: myhosts
+  vars:
+    install_root_cert_pem: root-ca.crt    
+  become: true
+  #remote_user: administrador
+  roles:
+    #- common
+    - cron-shutdown 
+    - install-cert 
+    - ovs  
+

@@ -1,0 +1,9 @@
+network:
+  version: 2
+  openvswitch: {}
+
+  bridges:
+    ovs-br0:
+      openvswitch: {}
+    ovs-br1:
+      openvswitch: {}

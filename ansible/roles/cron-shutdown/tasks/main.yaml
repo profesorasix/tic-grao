@@ -1,0 +1,8 @@
+---
+- name: Shutdown computers at 15:30 and 23:30
+  ansible.builtin.cron:
+    name: "shutdown_at_15_30"
+    state: present
+    minute: "30"
+    hour: "15,23"
+    job: shutdown -h now

@@ -1,0 +1,87 @@
+{
+    "policies":
+    {
+        "DisableAppUpdate": true,
+        "BlockAboutConfig": true,
+        "ExtensionSettings": {
+          "*": {
+            "blocked_install_message": "No es posible instalar extensiones.",
+            "install_sources": ["*"],
+            "installation_mode": "blocked",
+            "allowed_types": ["extension"]
+          },
+          "uBlock0@raymondhill.net": {
+            "installation_mode": "normal_installed",
+            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+          },
+          "@unitedstatesenglishdictionary": {
+            "installation_mode": "normal_installed",
+            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/us-english-dictionary/latest.xpi"
+          },
+          "es-es@dictionaries.addons.mozilla.org": {
+            "installation_mode": "normal_installed",
+            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/diccionario-de-espanol-espana/latest.xpi"
+          },
+          "ca-valencia@dictionaries.addons.mozilla.org": {
+            "installation_mode": "normal_installed",
+            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/valencian-catalan-dictionary/latest.xpi"
+          },
+          "langpack-ca-valencia@firefox.mozilla.org": {
+            "installation_mode": "normal_installed",
+            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/valencian-catalan-languag-9702/latest.xpi"
+          },
+          "langpack-es-ES@firefox.mozilla.org": {
+            "installation_mode": "normal_installed",
+            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/español-españa-language-pac/latest.xpi"
+          },
+          "langpack-es-AR@firefox.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "langpack-es-CL@firefox.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "langpack-es-MX@firefox.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "addons-search-detection@mozilla.com": {
+            "installation_mode": "allowed"
+          },
+          "amazon@search.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "bing@search.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "ddg@search.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "ebay@search.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "google@search.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "wikipedia@search.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "langpack-en-CA@firefox.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "langpack-en-GB@firefox.mozilla.org": {
+            "installation_mode": "allowed"
+          },
+          "chrome-gnome-shell@gnome.org": {
+            "installation_mode": "allowed"
+          },
+          "odoo-debug-extension@odoo.com": {
+            "installation_mode": "allowed"
+          },
+          "langpack-en-US@firefox.mozilla.org": {
+            "installation_mode": "allowed"
+          }
+        }
+    }
+}
+
+
+

@@ -1,0 +1,22 @@
+- name: Install wireshark
+  ansible.builtin.apt:
+    update_cache: no
+    state: present
+    pkg: wireshark
+
+- name: add students NOPASSWD
+  community.general.sudoers:
+    name: wireshark
+    state: present
+    group: students
+    runas: 'ALL:ALL'
+    commands: /usr/bin/wireshark
+    
+
+- name: add ALU_FP_A3 NOPASSWD
+  community.general.sudoers:
+    name: wireshark
+    state: present
+    group: ALU_FP_A3
+    runas: 'ALL:ALL'
+    commands: /usr/bin/wireshark

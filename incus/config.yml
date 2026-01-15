@@ -1,0 +1,21 @@
+default-remote: incus-os
+remotes:
+  images:
+    addr: https://images.linuxcontainers.org
+    protocol: simplestreams
+    public: true
+  incus-os:
+    addr: https://192.168.15.196:8443
+    auth_type: tls
+    project: default
+    protocol: incus
+    public: false
+  local:
+    addr: unix://
+    protocol: incus
+    public: false
+aliases: {}
+defaults:
+  list_format: ""
+  console_type: ""
+  console_spice_command: ""

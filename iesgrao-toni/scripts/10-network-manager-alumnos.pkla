@@ -1,0 +1,6 @@
+[Prevent alumno from modifying all network states and settings except with admin password]
+Identity=unix-user:*
+Action=org.freedesktop.NetworkManager.*
+ResultAny=no
+ResultInactive=no
+ResultActive=auth_admin_keep

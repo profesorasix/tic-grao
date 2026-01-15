@@ -1,0 +1,75 @@
+---
+- name: INCUS INSTALLATION AND INITIALIZATION
+  hosts: aulas
+  tasks:
+    - name: INSTALL INCUS PACKAGE
+      ansible.builtin.apt:
+        name: 
+          - wget
+          - aptitude
+          - bash-completion
+          - incus
+          - acl
+          - btrfs-progs
+        state: present
+        update_cache: true
+      become: true
+
+    - name: ADD alumnom TO INCUS SYSTEM GROUPS
+      ansible.builtin.user:
+        name: 'alumnom'
+        groups:
+          - incus
+          - incus-admin
+        append: true        
+      become: true
+
+    - name: ADD administrador TO INCUS SYSTEM GROUPS
+      ansible.builtin.user:
+        name: 'administrador'
+        groups:
+          - incus
+          - incus-admin
+        append: true
+      become: true
+
+    - name: RESET SSH CONNECTION TO ALLOW USER CHANGES
+      ansible.builtin.meta:
+        reset_connection
+
+    - name: INITIALIZE INCUS 
+      become: true
+      become_user: alumnom
+      ansible.builtin.shell: |
+        set -o pipefail
+        cat << EOF | incus admin init --preseed
+        config:
+          core.https_address: '[::]:8443'
+        networks: []
+        storage_pools:
+        - config:
+            size: 10GiB
+          description: ""
+          name: default
+          driver: btrfs
+        profiles:
+        - config: {}
+          description: "SMR Default incus profile"
+          devices:
+            eth0:
+              name: eth0
+              nictype: macvlan
+              parent: enp1s0
+              type: nic
+            root:
+              path: /
+              pool: default
+              type: disk
+          name: default
+        projects: []
+        cluster: null
+        EOF
+        touch $HOME/incus_init_done
+      args:
+        chdir: $HOME
+        creates: incus_init_done

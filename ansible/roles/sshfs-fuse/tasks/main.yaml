@@ -1,0 +1,5 @@
+- name: Comment out users_allow_other in /etc/fuse.conf
+  ansible.builtin.replace:
+    path: /etc/fuse.conf
+    regexp: '^#(user_allow_other)$'
+    replace: '\1'

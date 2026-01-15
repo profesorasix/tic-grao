@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Renombrar equipo
+Comment=Renombra el equipo ya configurado para clase
+Exec=/scripts/lanza_renombrar_equipo.sh
+Icon=/scripts/rename.png
+Terminal=false
+Type=Application

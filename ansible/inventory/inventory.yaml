@@ -1,0 +1,29 @@
+aula13:
+  vars:
+    ansible_user: administrador
+
+  hosts:
+    192.168.13.[1:28]
+    
+
+aula15:
+  vars:
+    ansible_user: administrador
+
+  hosts:
+    192.168.15.[1:28]
+
+aula82:
+  vars:
+    ansible_user: administrador
+
+  hosts:
+    192.168.82.[1:25]
+    
+aulas:
+  children:
+    aula13:
+    aula15:
+    aula82:
+
+

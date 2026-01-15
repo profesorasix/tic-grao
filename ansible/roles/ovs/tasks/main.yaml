@@ -1,0 +1,41 @@
+- name: Install ovs
+  ansible.builtin.apt:
+    update_cache: no
+    state: present
+    pkg: openvswitch-switch
+
+- name: Start ovs service
+  ansible.builtin.service:
+    name: openvswitch-switch
+    state: started  
+
+- name: Copy the network file (Debian, Ubuntu)
+  ansible.builtin.copy:
+    src: "20-ovs.yaml"
+    dest: "/etc/netplan/"
+    mode: '0600'   
+    validate: '/usr/sbin/netplan try --config-file %s' 
+
+- name: Apply network changes
+  ansible.builtin.command:
+    argv:
+      - /usr/sbin/netplan
+      - apply      
+
+- name: Allow non-privilegded students use ovs-vsctl
+  community.general.sudoers:
+    name: ovs
+    state: present
+    group: students
+    runas: 'ALL:ALL'
+    commands: /usr/bin/ovs-vsctl
+    
+
+- name: Allow non-privilegded students use ovs-vsctl
+  community.general.sudoers:
+    name: ovs
+    state: present
+    group: ALU_FP_A3
+    runas: 'ALL:ALL'
+    commands: /usr/bin/ovs-vsctl 
+  

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Configurar el equipo
+Comment=Configurar e equipo para clase
+Exec=/scripts/lanza_configurar_equipo.sh
+Icon=/scripts/config.png
+Terminal=false
+Type=Application

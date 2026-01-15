@@ -1,0 +1,29 @@
+---
+- name: Update packages
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install packages
+  ansible.builtin.apt:
+    state: present
+    pkg: "{{ item }}"
+    update_cache: false
+  loop:    
+    - tree
+    - tmux
+    - byobu
+    - python3-debian
+    - gpg    
+    - bridge-utils
+    - libxml2-utils
+    - evince
+    - git
+    - x11-utils
+    - libc-bin
+    - coreutils
+    - iproute2
+    - iptables
+    - mawk
+    - python3
+    - python3-pip
+    - docker.io

@@ -1,0 +1,15 @@
+- name: Add zabbly repo using key from URL
+  ansible.builtin.deb822_repository:
+    name: zabbly-incus-stable
+    types: deb
+    uris: https://pkgs.zabbly.com/incus/stable
+    suites: 'noble'
+    components: main
+    architectures: amd64
+    signed_by: https://pkgs.zabbly.com/key.asc
+
+- name: Install incus packages
+  ansible.builtin.apt:
+    update_cache: no
+    state: present
+    pkg: incus

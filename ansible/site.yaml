@@ -1,0 +1,23 @@
+---
+- hosts: aulas
+  vars:
+    install_root_cert_pem: root-ca.crt    
+  become: true
+  #remote_user: administrador
+  roles:
+    - common
+    - cron-shutdown
+    - epoptes
+    - wireshark
+    - incus
+    - lightning
+    - sssd-cache
+    - sublime
+    - gh_cli
+    - sshfs-fuse
+    - task-dev
+    - keystore
+    - obsidian
+    - xca
+    - install-cert
+

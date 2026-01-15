@@ -1,0 +1,11 @@
+sudo salt  '*' test.version
+
+sudo salt '*' state.apply
+
+sudo salt '*' state.sls tree
+
+sudo salt '*' ssh.set_auth_key_from_file vagrant salt://fileserver/ssh_keys/iesgrao_rsa.pub
+
+sudo salt '*' cp.get_file salt://fileserver/ssh_keys/iesgrao_rsa.pub ~
+
+

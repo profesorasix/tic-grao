@@ -1,0 +1,10 @@
+#pasos instalar ssh
+
+sshpass -f password.txt ssh-copy-id administrador@192.168.13.25
+scp  iesgrao-config-sssd.sh administrador@192.168.13.25:~/
+
+
+for ip in 192.168.15.{1..26}
+do
+	scp  iesgrao-config-sssd.sh administrador@$ip:~/
+done

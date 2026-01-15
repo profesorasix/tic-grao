@@ -1,0 +1,10 @@
+#TEST
+myhosts:
+  vars:
+    ansible_user: administrador
+
+  hosts:
+    my_host_01:
+      ansible_host: 10.149.165.192
+    my_host_02:
+      ansible_host: 10.149.165.200

@@ -1,0 +1,27 @@
+ #/etc/monit/conf-available.d/epoptes-client
+ #ln -s /etc/monit/conf-available.d/epoptes-client /etc/monit/conf-enabled.d/
+
+ #Edit file /etc/monit/monitr and set shorter delay
+ #/etc/monit/monitrc #set delay
+ 
+ #add the monit unit /etc/monit/conf-available/epoptes-client
+ check program epoptes-client with path "/usr/bin/systemctl --quiet is-active epoptes-client"
+   if status != 0 then start
+   start program = "/bin/bash -c '/usr/bin/systemctl start epoptes-client.service'"
+   stop  program = "/bin/bash -c '/usr/bin/systemctl stop epoptes-client.service'"
+
+
+#set delay to 5 sec
+sed -i  -e 's/set\s*daemon\s*120/set daemon 5/' /etc/monit/monitrc 
+
+#create monit epoptes unit
+bash -c "cat << EOF > /etc/monit/conf-available/epoptes-client
+check program epoptes-client with path \"/usr/bin/systemctl --quiet is-active epoptes-client\"
+  if status != 0 then start
+    start program = \"/bin/bash -c '/usr/bin/systemctl start epoptes-client.service'\"
+    stop  program = \"/bin/bash -c '/usr/bin/systemctl stop epoptes-client.service'\"
+EOF"
+
+#activate
+ln -s /etc/monit/conf-available.d/epoptes-client /etc/monit/conf-enabled.d/
+

@@ -1,0 +1,15 @@
+- name: Add repo using key from URL
+  ansible.builtin.deb822_repository:
+    name: hashicorp
+    types: deb
+    uris: https://apt.releases.hashicorp.com
+    suites: 'noble'
+    components: main
+    architectures: amd64
+    signed_by: https://apt.releases.hashicorp.com/gpg
+
+- name: Install packages
+  ansible.builtin.apt:
+    update_cache: no
+    state: present
+    pkg: vagrant

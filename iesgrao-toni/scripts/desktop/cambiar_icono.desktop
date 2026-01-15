@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=cambiar_icono
+Comment=Cambia el icono de conexion segun esta activado Internet
+Exec=/scripts/cambiaricono.sh &> /dev/null
+Icon=/scripts/x1.png
+Terminal=false
+Type=Application

@@ -1,0 +1,8 @@
+#!/bin/sh
+xrandr --newmode "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
+xrandr --newmode "1440x900_60.00"  106.50  1440 1528 1672 1904  900 903 909 934 -hsync +vsync
+xrandr --addmode VGA-1 1280x1024_60.00
+xrandr --addmode VGA-1 1440x900_60.00
+xrandr --output VGA-1 --mode "1440x900_60.00"
+xrandr --output HDMI-1 --pos 1440x0 --mode 1600x900 --rotate normal 
+xrandr --output HDMI-2 --pos 0x0 --mode 1440x900 --rotate normal 

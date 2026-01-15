@@ -1,0 +1,46 @@
+---
+- name: Install monit
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - monit        
+    update_cache: no 
+
+- name: set delay
+  ansible.builtin.lineinfile:
+    path: /etc/monit/monitrc
+    state: present
+    regexp: '^set\s+daemon\s+120'
+    line: 'set daemon 5'
+
+- name: enable monit httpd
+  ansible.builtin.replace:
+    path: /etc/monit/monitrc
+    regexp: '#set httpd[\s\S]*allow localhost[\s]+#'
+    replace: |-
+        set httpd port 2812 and
+        #    use address localhost
+             allow localhost        #  
+
+- name: create epoptes-client monit unit
+  ansible.builtin.copy:
+    content: |
+        check program epoptes-client with path "/usr/bin/systemctl --quiet is-active epoptes-client"
+        if status != 0 then start
+          start program = "/bin/bash -c '/usr/bin/systemctl start epoptes-client.service'"
+          stop  program = "/bin/bash -c 'usr/bin/systemctl stop epoptes-client.service'"
+    dest: /etc/monit/conf-available/epotes-client
+
+
+
+- name : activate monit unit
+  ansible.builtin.file:
+    src: /etc/monit/conf-available/epotes-client
+    dest: /etc/monit/conf-enabled/epotes-client
+    state: link
+
+
+- name: Restart service httpd, in all cases
+  ansible.builtin.service:
+    name: monit
+    state: restarted  

@@ -1,0 +1,13 @@
+- name: Add cache line after domain.edu.gva.es
+  ansible.builtin.lineinfile:
+    path: /etc/sssd/sssd.conf
+    state: present
+    insertafter: '^\[domain\/EDU\.GVA\.ES\]$'
+    line: 'cache_credentials = true'
+
+- name: Add cache line after domain.alu.edu.gva.es
+  ansible.builtin.lineinfile:
+    path: /etc/sssd/sssd.conf
+    state: present
+    insertafter: '^\[domain\/ALU\.EDU\.GVA\.ES\]$'
+    line: 'cache_credentials = true'

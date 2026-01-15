@@ -1,0 +1,6 @@
+- name: Install keystore
+  ansible.builtin.apt:
+    deb: https://github.com/kaikramer/keystore-explorer/releases/download/v5.6.0/kse_5.6.0_all.deb
+    state: present
+
+      

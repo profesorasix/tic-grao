@@ -1,0 +1,2 @@
+#Ansible: apagado
+30 22 * * * /sbin/shutdown -P now
