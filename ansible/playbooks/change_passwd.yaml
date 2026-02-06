@@ -1,8 +1,6 @@
 ---
 - hosts: all
-  vars:
-    install_root_cert_pem: root-ca.crt  
-
+  
   vars_prompt:
     - name: new_root_password_encrypted
       prompt: Please enter the new root password
@@ -14,8 +12,4 @@
   become: true
   #remote_user: administrador
   roles:
-    #- common
     - update-passwd
-
-    
-

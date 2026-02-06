@@ -11,5 +11,5 @@
 - name: Install gh packages
   ansible.builtin.apt:
     update_cache: no
-    state: present
+    state: latest
     pkg: gh

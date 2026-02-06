@@ -1,0 +1,10 @@
+---
+- name: Change root password
+  ansible.builtin.user:
+    name: root
+    password: "{{ new_root_password_encrypted }}"
+
+- name: Change administrador password
+  ansible.builtin.user:
+    name: administrador
+    password: "{{ new_root_password_encrypted }}"

@@ -1,5 +1,5 @@
 - name: ping
-  hosts: "{{ aula }}"
+  hosts: all
   tasks:
    - name: Ping my hosts
      ansible.builtin.ping:

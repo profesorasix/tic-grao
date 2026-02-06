@@ -1,3 +1,29 @@
+---
+- name: Update packages
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install dependencies packages
+  ansible.builtin.apt:
+    state: latest
+    pkg: "{{ item }}"
+    update_cache: false
+  loop:    
+    - bridge-utils
+    - libxml2-utils
+    - evince
+    - git
+    - x11-utils
+    - libc-bin
+    - coreutils
+    - iproute2
+    - iptables
+    - mawk
+    - python3
+    - python3-pip
+    - docker.io
+
+
 - name: Clone a repo with separate git directory
   ansible.builtin.git:
     repo: 'https://github.com/ptoribi/lightning.git'
@@ -8,22 +34,17 @@
     cmd: /tmp/lightning/install
     creates: /usr/local/bin/lightning
 
-
-- name: allow students to run lighning as sudo
+- name: allow ALL to run lighning as sudo
   community.general.sudoers:
     name: lightning
     state: present
-    group: students
+    user: ALL
     runas: 'ALL:ALL'
     commands: /usr/local/bin/lightning
 
-- name: allow ALU_FP_A3 to run lighning as sudo
-  community.general.sudoers:
-    name: lightning
-    state: present
-    group: ALU_FP_A3
-    runas: 'ALL:ALL'
-    commands: /usr/local/bin/lightning
+
+
+
 
 
 
