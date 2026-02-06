@@ -15,9 +15,9 @@ cp proyector.desktop /etc/skel/$DESKTOP_NAME
 chmod 755 /etc/skel/$DESKTOP_NAME/proyector.desktop
 
 #Copy needed files in desktop user folder
-for user in `getent passwd {1000..1100} | awk -F : '{print $1}'`
+for user in `ls -1 /home`
 do
 	cp proyector.desktop /home/$user/$DESKTOP_NAME
 	chmod 755 /home/$user/$DESKTOP_NAME/proyector.desktop
-	chown $user:$user /home/$user/$DESKTOP_NAME/proyector.desktop
+	chown $user:'Domain Users' /home/$user/$DESKTOP_NAME/proyector.desktop
 done
