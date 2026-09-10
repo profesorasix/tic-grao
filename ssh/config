@@ -1,5 +1,0 @@
-Host sad
-	HostName sad-asir2.mooo.com
-	User profesor_asix
-	IdentityFile ~/.ssh/id_gcc
-

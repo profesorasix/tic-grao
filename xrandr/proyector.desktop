@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Proyector
 Comment=Duplicar pantallas en proyector
-Exec=/usr/local/bin/proyector-aulas.sh
+Exec=/usr/local/bin/xprofile-aulas.sh
 Icon=/usr/share/icons/HighContrast/256x256/devices/display-projector.png
 Terminal=false
 Type=Application

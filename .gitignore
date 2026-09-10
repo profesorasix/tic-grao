@@ -1,0 +1,7 @@
+id_rsa
+.megaignore
+scripts/id_rsa
+scripts2026/id_rsa
+iesgrao-toni/scripts/id_rsa
+*/id_rsa
+ssh/
