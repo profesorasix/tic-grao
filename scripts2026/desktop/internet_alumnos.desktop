@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Internet_alumnos
+Comment=Conectar o desconectar Internet a los alumnos
+Exec=/scripts/conectar_red.sh &> /dev/null
+Icon=/scripts/x1.png
+Terminal=false
+Type=Application

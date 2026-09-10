@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=eliminar_icono_firefox
+Comment=Elimina el icono de firefox del escritorio de la cuenta de invitado
+Exec=/usr/bin/find /tmp/guest* -name "firefox_firefox.desktop" -exec /usr/bin/rm {} \\; &> /dev/null
+Terminal=false
+Type=Application

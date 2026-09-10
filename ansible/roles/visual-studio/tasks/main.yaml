@@ -1,0 +1,15 @@
+- name: Add visual studio code repo using key from URL
+  ansible.builtin.deb822_repository:
+    name: vscode
+    types: deb
+    uris: https://packages.microsoft.com/repos/code
+    suites: 'stable'
+    components: main
+    architectures: amd64
+    signed_by: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Install visual studio code packages
+  ansible.builtin.apt:
+    update_cache: yes
+    state: present
+    pkg: code

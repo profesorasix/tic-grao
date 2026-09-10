@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Crear usuario
+Comment=Crear usuarios en el equipo
+Exec=/scripts/crear_usuario.sh &> /dev/null
+Icon=/scripts/usuario.png
+Terminal=true
+Type=Application

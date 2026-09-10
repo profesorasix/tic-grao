@@ -1,0 +1,41 @@
+# configure-app-networking.yml
+# Generates application config using network facts
+---
+- name: Configure application networking
+  hosts: all
+  
+  gather_facts: yes
+  become: yes
+  tasks:
+ #   - name: Generate application network config
+ #     ansible.builtin.template:
+ #       src: app-network.conf.j2
+ #       dest: /tmp/network.conf
+ #       mode: '0644'
+ #     delegate_to:localhost
+
+ #   - name: Generate application network config
+ #     ansible.builtin.setup:
+ #     register: setupvar
+ #     delegate_to: localhost
+        
+ #   - name: copy 
+ #     ansible.builtin.copy:
+ #       content: '{{ setupvar.ansible_facts }}'
+ #       dest: /tmp/{{ ansible_fqdn }}      
+
+  - name: Generate report
+    delegate_to: localhost
+    tags:
+      - always
+    copy:
+      dest: ./hosts-OS-version.txt
+      content: |
+          {% for host in groups['all'] %}
+          {% if hostvars[host]['ansible_facts']['default_ipv4']['address'] is defined %}
+          {{ '%-50s' | format(host) }} {{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['distribution_version'] }}
+          {% else %}
+          {{ '%-50s' | format(host) }} undefined
+          {% endif %}
+          {% endfor %}
+   

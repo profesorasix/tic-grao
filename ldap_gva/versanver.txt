@@ -1,0 +1,59 @@
+# extended LDIF
+#
+# LDAPv3
+# base <CN=versanver,OU=EDUCACION,DC=edu,DC=gva,DC=es> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# versanver, EDUCACION, edu.gva.es
+dn: CN=versanver,OU=EDUCACION,DC=edu,DC=gva,DC=es
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+cn: versanver
+sn:: U8OBTkNIRVogVkVSREVKTw==
+givenName: VERA
+initials: VSV
+distinguishedName: CN=versanver,OU=EDUCACION,DC=edu,DC=gva,DC=es
+instanceType: 0
+whenCreated: 20210623104604.0Z
+whenChanged: 20260226090101.0Z
+displayName:: U8OBTkNIRVogVkVSREVKTywgVkVSQQ==
+uSNCreated: 4054053
+memberOf: CN=ALU_ESO,OU=EDUCACION,DC=edu,DC=gva,DC=es
+memberOf: CN=GRP_46014893,OU=EDUCACION,DC=edu,DC=gva,DC=es
+uSNChanged: 119549646
+proxyAddresses: smtp:vsv749707@apps.edu.gva.es
+proxyAddresses: SMTP:versanver@alu.edu.gva.es
+name: versanver
+objectGUID:: U2PjmbfLGUiMQOxmI8wLWA==
+userAccountControl: 66048
+codePage: 0
+countryCode: 0
+employeeID: 43313266B
+lastLogon: 134165700544221555
+pwdLastSet: 133809103296096878
+primaryGroupID: 513
+objectSid:: AQUAAAAAAAUVAAAAafyDEj9a9heZ3ViHh24BAA==
+accountExpires: 9223372036854775807
+logonCount: 4
+sAMAccountName: versanver
+division: 1
+sAMAccountType: 805306368
+userPrincipalName: versanver@alu.edu.gva.es
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=edu,DC=gva,DC=es
+dSCorePropagationData: 16010101000000.0Z
+mS-DS-ConsistencyGuid:: U2PjmbfLGUiMQOxmI8wLWA==
+lastLogonTimestamp: 134165700541342265
+mail: versanver@alu.edu.gva.es
+msExchHideFromAddressLists: TRUE
+nIA: 11347582
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1

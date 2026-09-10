@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+    install_root_cert_pem: root-ca.crt  
+    
+  become: true
+  #remote_user: administrador
+  roles:
+    -  role: '../roles/lightning'
+    -  role: '../roles/ovs'
+    -  role: '../roles/epoptes'
+    #-  role: '../roles/jetbrains'
+    #-  role: '../roles/opentofu' 
+    
+
+

@@ -1,0 +1,132 @@
+---
+- name: Incus installation and setup for SMR Lab
+  hosts: all
+
+  vars_prompt:
+    - name: parent_interface
+      prompt: What is interface of these computers?
+      private: false
+
+  tasks:    
+    - name: Install needed packages
+      ansible.builtin.apt:
+        name:
+          - python3-debian 
+          - wget
+          - aptitude
+          - bash-completion
+          - acl
+          - btrfs-progs
+        state: present
+        update_cache: true
+      become: true
+
+    - include_role:
+        name: ../../roles/incus
+    
+    - name: Add alumnom to incus system groups
+      ansible.builtin.user:
+        name: 'alumnom'
+        groups:
+          - incus
+          - incus-admin
+        append: true        
+      become: true
+
+    - name: Add administrador to incus system groupa
+      ansible.builtin.user:
+        name: 'administrador'
+        groups:
+          - incus
+          - incus-admin
+        append: true
+      become: true
+
+    - name: Reset ssh connection to allow user changes
+      ansible.builtin.meta:
+        reset_connection
+
+    - name: Create X11 Incus profile
+      become: true
+      become_user: alumnom
+      ansible.builtin.shell: |
+        set -xeu pipefail
+        cat << EOF | incus profile create X11
+        description: Sets up GPU, Wayland, X11 and PulseAudio
+        devices:
+          intel-igpu:
+            gid: "1000"
+            type: gpu
+            uid: "1000"
+          pulse:
+            bind: instance
+            connect: unix:/run/user/1000/pulse/native
+            gid: "1000"
+            listen: unix:/mnt/pulse.sock
+            mode: "0700"
+            security.gid: "1000"
+            security.uid: "1000"
+            type: proxy
+            uid: "1000"
+          x11:
+            bind: instance
+            connect: unix:/tmp/.X11-unix/X0
+            gid: "1000"
+            listen: unix:/mnt/X0
+            mode: "0700"
+            security.gid: "1000"
+            security.uid: "1000"
+            type: proxy
+            uid: "1000"
+        EOF
+        touch incus_X11profile_done
+      args:
+        chdir: $HOME
+        creates: incus_X11profile_done
+
+    - name: Initialize incus
+      become: true
+      become_user: alumnom
+      ansible.builtin.shell: |
+        set -xeu pipefail
+        cat << EOF | incus admin init --preseed
+        config:
+          core.https_address: '[::]:8443'
+        networks: []
+        storage_pools:
+        - config:
+            size: 10GiB
+          description: ""
+          name: default
+          driver: btrfs
+        profiles:
+        - config: {}
+          description: "SMR Default incus profile"
+          devices:
+            eth0:
+              name: eth0
+              nictype: macvlan
+              parent: "{{ parent_interface }}"
+              type: nic
+            root:
+              path: /
+              pool: default
+              type: disk
+          name: default
+        projects: []
+        cluster: null
+        EOF
+        touch incus_init_done
+      args:
+        chdir: $HOME
+        creates: incus_init_done
+
+    - name: Run SMR setup incus script
+      become: true
+      become_user: alumnom
+      ansible.builtin.script: ../../files/incus-script.sh
+      args:
+        chdir: /home/alumnom/
+        creates: incus_RAL_setup_completed
+
+

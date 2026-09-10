@@ -1,0 +1,177 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  INSTANCE_NAME: incus-os:ansible
+  BATS_DIR: /tmp/bats
+  IMAGE_NAME: ubuntu/noble
+  
+tasks:
+  default:
+    cmds:
+      - echo "{{.INSTANCE_NAME}}"
+    silent: true
+
+  deploy :
+    desc: Deploy ansible roles to instance {{.INSTANCE_NAME}} 
+    cmds:
+      - (tar -czvf - ../ansible | incus file push - {{.INSTANCE_NAME}}/home/ubuntu/ansible.tar.gz --mode 644 --gid 1000 --uid 1000)
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'tar -xzvf ansible.tar.gz'
+      
+      
+  aula13:
+    desc: Run playbook for aula13 
+    deps: [deploy]
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible-playbook -i ./inventory/inventory.yaml ./playbooks/aulas_smr.yaml --limit aula13  --u admistrador --become --ask-become-pass'
+
+  aula15:
+    desc: Run playbook for aula13 
+    deps: [deploy]
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible-playbook -i ./inventory/inventory.yaml ./playbooks/aulas_smr.yaml --limit aula15  --u admistrador --become --ask-become-pass'
+
+  ping_13:
+    desc: ping aula13
+    internal: false
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible aula13 -i inventory/inventory.yaml -m ping'
+
+  ping_15:
+    desc: ping aula15
+    internal: false
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible aula15 -i inventory/inventory.yaml -m ping'
+
+  shutdown_13:
+    desc: shutdown aula13
+    internal: false
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible aula13 -i inventory/inventory.yaml -m community.general.shutdown --become --ask-become-pass'
+
+  shutdown_15:
+    desc: shutdown aula15
+    internal: false
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible aula15 -i inventory/inventory.yaml -m community.general.shutdown --become --ask-become-pass'
+
+  reboot_13:
+    desc: shutdown aula15
+    internal: false
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible aula13 -i inventory/inventory.yaml -m community.general.reboot -a "msg=reboot in 5 seconds" --become --ask-become-pass'  
+
+  reboot_15:
+    desc: shutdown aula15
+    internal: false
+    cmds:
+      - incus exec {{.INSTANCE_NAME}} -- su -l ubuntu -c 'cd ansible && ansible aula15 -i inventory/inventory.yaml -m community.general.reboot -a "msg=reboot in 5 seconds" --become --ask-become-pass'  
+
+
+  destroy:
+    prompt: This is a dangerous command... Do you want to continue?
+    desc: Destroy instance {{.INSTANCE_NAME}}
+    preconditions:
+      - sh: incus list name={{.INSTANCE_NAME}} | grep {{.INSTANCE_NAME}}
+        msg: "Instance {{.INSTANCE_NAME}} does not exists"
+    cmds:
+      - incus delete {{.INSTANCE_NAME}} --force 
+
+##ACTIVITY TASKS
+
+  build:
+    desc: Create specific activity files and set up
+    deps: [init]
+    cmds:
+      - task: activity-files
+      - task: activity-users-groups
+      - task: activity-acl-perms
+
+  activity-files:
+    internal: true
+    desc: Create files
+    cmds:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'mkdir -p /shared/{aula82,aula14,aula13,common,misc}'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'mkdir -p /shared/aula82/SAD /shared/aula13/RLO'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'touch /shared/aula82/SAD/sad_{1..4}.txt /shared/aula13/RLO/redes_{1..4}.txt /shared/common/common_{1..4}.txt /shared/misc/misc_{1..4}.txt'
+    status:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'test -d /shared'
+
+  activity-users-groups:
+    internal: true
+    desc: Create users and groups
+    cmds:
+      - for: ['student','teacher','asir2','asir1','smr1a']
+        cmd: incus exec -- {{.INSTANCE_NAME}} bash -c 'addgroup {{.ITEM}}' 
+
+      - for: ['asir2_1','asir2_2','asir1_1','asir1_2','smr1a_1','smr1a_2']
+        cmd: incus exec -- {{.INSTANCE_NAME}} bash -c 'adduser --disabled-password --ingroup student --shell /bin/bash --gecos "{{.ITEM}}" {{.ITEM}}' 
+
+      - for: ['teacher1','teacher2']
+        cmd: incus exec -- {{.INSTANCE_NAME}} bash -c 'adduser --disabled-password --ingroup teacher --shell /bin/bash --gecos "{{.ITEM}}" {{.ITEM}}' 
+
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'for u in asir2_1 asir2_2; do usermod -a -G asir2 $u; done'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'for u in asir1_1 asir1_2; do usermod -a -G asir1 $u; done'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'for u in smr1a_1 smr1a_2; do usermod -a -G smr1a $u; done'
+
+       
+    status:
+
+  activity-acl-perms:
+    internal: false
+    desc: assign acl perms
+    cmds:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rdm g:student:rX /shared/common'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rdm g:student:rwX /shared/misc'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rdm g:teacher:rwX /shared/'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rdm g:asir1:rX /shared/aula14'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rdm g:asir2:rX /shared/aula82'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rdm g:smr1a:rX /shared/aula13'      
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rm g:student:rX /shared/common'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rm g:student:rwX /shared/misc'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rm g:teacher:rwX /shared/'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rm g:asir1:rX /shared/aula14'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rm g:asir2:rX /shared/aula82'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'setfacl -Rm g:smr1a:rX /shared/aula13'      
+
+
+  clean:
+    ignore_error: true
+    desc: Clean activity files and set up
+    prompt: This will delete all the files and activity tasks done... Do you want to continue?
+    cmds: 
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'rm -rf  /shared'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'for u in asir2_1 asir2_2 asir1_1 asir1_2 smr1a_1 smr1a_2 teacher1 teacher2; do userdel $u; done'
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'for g in student teacher asir2 asir1 smr1a; do groupdel $g; done' 
+    
+
+
+#TESTING TASKS
+
+  test-download:
+    internal: true
+    cmds:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'git clone https://github.com/ASIR2-SGD/SGD-Bats.git {{.BATS_DIR}}'
+    status:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'test -d {{.BATS_DIR}}'
+
+  test-update:
+    internal: true
+    deps: [test-download]    
+    status:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'test `git -C {{.BATS_DIR}} ls-remote origin refs/heads/master | cut -f 1` == `git -C {{.BATS_DIR}} rev-parse refs/heads/master`'
+    cmds:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'git -C {{.BATS_DIR}} pull'
+      
+  test:
+    deps: [test-update]
+    desc: run activity tests
+    cmds:
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'cd {{.BATS_DIR}}/acl_bats && bats acl-tests.bats'
+
+  test-local:
+    desc: run activity tests local dep
+    cmds:
+      - incus file push -r /vagrant/SGD-Bats/* {{.INSTANCE_NAME}}/tmp/bats
+      - incus exec -- {{.INSTANCE_NAME}} bash -c 'cd {{.BATS_DIR}}/acl_bats && bats acl-tests.bats'

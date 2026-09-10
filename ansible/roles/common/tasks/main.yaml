@@ -1,4 +1,17 @@
 ---
+- name: Install official repositories if missing
+  ansible.builtin.copy:
+    src: official-package-repositories.list
+    dest: /etc/apt/sources.list.d/official-package-repositories.list
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Remove conflicting repo if needed
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/task-task.sources
+    state: absent
+
 - name: Update packages
   ansible.builtin.apt:
     update_cache: true
@@ -13,4 +26,22 @@
     - tmux
     - byobu
     - python3-debian
-    - gpg    
+    - gpg
+    - fping    
+    - xsel
+    - ldap-utils
+    - ldapscripts
+    - nmap
+    - just
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - virt-viewer
+    - p11-kit
+    - pandoc
+    - texlive-extra-utils
+    - texlive-xetex
+    - weasyprint
+    - wkhtmltopdf
+    - wireshark
+

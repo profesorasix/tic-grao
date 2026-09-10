@@ -1,0 +1,15 @@
+- name: Add google-chrome repo
+  ansible.builtin.deb822_repository:
+    name: google-chrome
+    types: deb
+    uris: http://dl.google.com/linux/chrome/deb/ 
+    suites: 'stable'
+    components: main
+    architectures: amd64
+    signed_by: https://dl.google.com/linux/linux_signing_key.pub
+
+- name: Install google-chrome packages
+  ansible.builtin.apt:
+    update_cache: yes
+    state: present
+    pkg: google-chrome-stable

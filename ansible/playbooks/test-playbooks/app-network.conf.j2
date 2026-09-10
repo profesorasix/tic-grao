@@ -1,0 +1,19 @@
+{# templates/app-network.conf.j2 #}
+{# Application network configuration from Ansible facts #}
+
+# Bind address - use the primary interface
+bind_address = {{ ansible_facts['default_ipv4']['address'] }}
+bind_port = 8080
+
+# Advertise address for cluster communication
+advertise_address = {{ ansible_facts['default_ipv4']['address'] }}
+
+# DNS servers from system configuration
+{% for ns in ansible_facts['dns']['nameservers'] %}
+dns_server_{{ loop.index }} = {{ ns }}
+{% endfor %}
+
+# Network interfaces available on this host
+{% for iface in ansible_facts['interfaces'] if iface == 'lo' %}
+# {{ iface }}: {{ ansible_facts[iface].get('ipv4', {}).get('address', 'no ipv4') | default('no ipv4') }}
+{% endfor %}

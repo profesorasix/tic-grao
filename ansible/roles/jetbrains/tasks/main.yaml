@@ -1,0 +1,10 @@
+- name: Add flathub repo
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    
+- name: Install Jetbrains IntelliJ-IDEA from flatpak
+  community.general.flatpak:
+    name: com.jetbrains.IntelliJ-IDEA-Ultimate
+    state: present

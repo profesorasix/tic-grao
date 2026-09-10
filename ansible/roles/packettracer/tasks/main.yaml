@@ -1,0 +1,7 @@
+- name: Install packettracer 9.0
+  ansible.builtin.apt:
+    deb: https://www.dropbox.com/scl/fi/h3l5v61t1p4579rwzx68z/CiscoPacketTracer_900_Ubuntu_64bit.deb?rlkey=5qeo83wq108cdf1b96v898yt4&st=xamp2dad&raw=1      
+    state: present
+
+      
+

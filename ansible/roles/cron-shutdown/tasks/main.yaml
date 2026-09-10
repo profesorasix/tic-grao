@@ -1,5 +1,5 @@
 ---
-- name: Shutdown computers at 15:30 and 23:30
+- name: Shutdown computers at 23:30
   ansible.builtin.cron:
     name: "shutdown_at_15_30"
     state: present

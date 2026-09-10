@@ -12,4 +12,4 @@
   become: true
   #remote_user: administrador
   roles:
-    - update-passwd
+    - role: '../roles/update-passwd'

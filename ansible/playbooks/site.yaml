@@ -1,0 +1,24 @@
+---
+- hosts: aulas
+  vars:
+    install_root_cert_pem: root-ca.crt    
+  become: true
+  #remote_user: administrador
+  roles:
+    - role: '../roles/common'
+    - role: '../roles/cron-shutdown'
+    - role: '../roles/epoptes'
+    - role: '../roles/wireshark'
+    - role: '../roles/incus'
+    - role: '../roles/lightning'
+    - role: '../roles/sssd-cache'
+    - role: '../roles/sublime'
+    - role: '../roles/gh_cli'
+    - role: '../roles/sshfs-fuse'
+    - role: '../roles/task-dev'
+    - role: '../roles/keystore'
+    - role: '../roles/obsidian'
+    - role: '../roles/xca'
+    - role: '../roles/install-cert'
+    - role: '../roles/opentofu'
+

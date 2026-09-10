@@ -1,85 +1,88 @@
-all:
-  aula13:
-    vars:
-      ansible_user: administrador
+aula13:
+  vars:
+    ansible_user: administrador
 
-    hosts:
-      192.168.13.[1:28]
-      
+  hosts:
+    192.168.13.[1:24]
+    
 
-  aula14:
-    vars:
-      ansible_user: administrador
+aula14:
+  vars:
+    ansible_user: administrador
 
-    hosts:
-      192.168.14.[1:25]
+  hosts:
+    192.168.14.[1:25]
 
-  aula15:
-    vars:
-      ansible_user: administrador
+aula15:
+  vars:
+    ansible_user: administrador
 
-    hosts:
-      192.168.15.[1:28]
+  hosts:
+    192.168.15.[1:24]
 
-  aula79:
-    vars:
-      ansible_user: administrador
+aula79:
+  vars:
+    ansible_user: administrador
 
-    hosts:
-      192.168.79.[1:25]
-
-
-  aula82:
-    vars:
-      ansible_user: administrador
-
-    hosts:
-      192.168.82.[1:25]
+  hosts:
+    192.168.79.[1:25]
 
 
-  aula132:
-    vars:
-      ansible_user: administrador
+aula82:
+  vars:
+    ansible_user: administrador
 
-    hosts:
-      192.168.132.[1:25]
+  hosts:
+    192.168.82.[1:25]
+
+
+aula132:
+  vars:
+    ansible_user: administrador
+
+  hosts:
+    192.168.132.[1:25]
 
 
 
 
 #groups
-  teachers:
-    vars:
-      ansible_user: administrador
+teachers:
+  vars:
+    ansible_user: administrador
 
-    hosts:
-      aula_13_teacher:
-        ansible_host: 192.168.13.101
-      aula_14_teacher:
-        ansible_host: 192.168.14.101
-      aula_15_teacher:
-        ansible_host: 192.168.15.101
-      aula_79_teacher:
-        ansible_host: 192.168.79.101
-      aula_82_teacher:
-        ansible_host: 192.168.82.101
-      aula_132_teacher:
-        ansible_host: 192.168.132.101
-      
-      
-  aulas:
-    children:
-      aula13:
-      aula14:
-      aula15:
-      aula82:
-      aula79:
-      aula132:
+  hosts:
+    aula_13_teacher:
+      ansible_host: 192.168.13.101
+    aula_14_teacher:
+      ansible_host: 192.168.14.101
+    aula_15_teacher:
+      ansible_host: 192.168.15.101
+    aula_79_teacher:
+      ansible_host: 192.168.79.101
+    aula_82_teacher:
+      ansible_host: 192.168.82.101
+    aula_132_teacher:
+      ansible_host: 192.168.132.101
+    
+    
+aulas:
+  children:
+    aula13:
+    aula14:
+    aula15:
+    aula82:
+    aula79:
+    aula132:
 
-  smr1:
-    children:
-      aula13:
-      aula15:
+smr1:
+  children:
+    aula13:
+    aula15:
+
+all:
+  children:
+    aulas:
 
 
 

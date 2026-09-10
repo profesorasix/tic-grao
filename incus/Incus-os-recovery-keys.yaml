@@ -1,0 +1,50 @@
+config:
+  custom_ca_certs:
+    - |
+      -----BEGIN CERTIFICATE-----
+      MIIBpDCCAUqgAwIBAgIRAMJ7Axj8Ea/nLGYILYWJWrcwCgYIKoZIzj0EAwIwMDES
+      MBAGA1UEChMJaWVzZ3Jhb0NBMRowGAYDVQQDExFpZXNncmFvQ0EgUm9vdCBDQTAe
+      Fw0yNjAzMTUwOTI4MzhaFw0zNjAzMTIwOTI4MzhaMDAxEjAQBgNVBAoTCWllc2dy
+      YW9DQTEaMBgGA1UEAxMRaWVzZ3Jhb0NBIFJvb3QgQ0EwWTATBgcqhkjOPQIBBggq
+      hkjOPQMBBwNCAATD/aqJEDnjnmb+PZJOGUPYm6L56YZwu4MxM3VoViHX4CEOYCop
+      QGYDj5Rr+LzV9w+Ndnuy9Koqf7U6QJW5P7rDo0UwQzAOBgNVHQ8BAf8EBAMCAQYw
+      EgYDVR0TAQH/BAgwBgEB/wIBATAdBgNVHQ4EFgQUBL91U+HC6GSkH0OizLZI+N8s
+      KoIwCgYIKoZIzj0EAwIDSAAwRQIhAN1pCmbMC00excYBXPe73gUcv68CkYtQdVoC
+      wyCNthNqAiBKjQMKeQADHJOe9u4UKorC4OSTXtnq6ZtKf2fofZ9l3A==
+      -----END CERTIFICATE-----
+  encryption_recovery_keys:
+    - jdvujltt-cejfgdlf-kfjueuut-klriflji-fcdihldr-nevlhlvg-kdljvdgj-dhckielk
+state:
+  drive_recovery_keys: {}
+  encrypted_volumes:
+    - state: unlocked (TPM)
+      volume: root
+    - state: unlocked (TPM)
+      volume: swap
+  encryption_recovery_keys_retrieved: true
+  pool_recovery_keys:
+    local: 34I2Uh8+wHFCUC2ujoDkBqzIu2lteEgc9gbj1f2GOc4=
+  secure_boot_certificates:
+    - fingerprint: 26dce4dbb3de2d72bd16ae91a85cfeda84535317d3ee77e0d4b2d65e714cf111
+      issuer: CN=Incus OS - Secure Boot E1,O=Linux Containers
+      subject: CN=Incus OS - Secure Boot PK R1,O=Linux Containers
+      type: PK
+    - fingerprint: 9a42866f496834bde7e1b26a862b1e1b6dea7b78b91a948aecfc4e6ef79ea6c1
+      issuer: CN=Incus OS - Secure Boot E1,O=Linux Containers
+      subject: CN=Incus OS - Secure Boot KEK R1,O=Linux Containers
+      type: KEK
+    - fingerprint: 21b6f423cf80fe6c436dfea0683460312f276debe2a14285bfdc22da2d00fc20
+      issuer: CN=Incus OS - Secure Boot E1,O=Linux Containers
+      subject: CN=Incus OS - Secure Boot 2025 R1,O=Linux Containers
+      type: db
+    - fingerprint: 2243c49fcf6f84fe670f100ecafa801389dc207536cb9ca87aa2c062ddebfde5
+      issuer: CN=Incus OS - Secure Boot E1,O=Linux Containers
+      subject: CN=Incus OS - Secure Boot 2026 R1,O=Linux Containers
+      type: db
+    - fingerprint: f01614a7a81ba477f0746cf2de71b20dddec709e756c9ea57cb67f93f25ba9fd
+      issuer: CN=Microsoft Root Certificate Authority 2010,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US
+      subject: CN=Microsoft Windows PCA 2010,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US
+      type: dbx
+  secure_boot_enabled: true
+  system_state_is_trusted: true
+  tpm_status: ok

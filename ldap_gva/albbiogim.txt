@@ -1,0 +1,61 @@
+# extended LDIF
+#
+# LDAPv3
+# base <CN=albbiogim,OU=EDUCACION,DC=edu,DC=gva,DC=es> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# albbiogim, EDUCACION, edu.gva.es
+dn: CN=albbiogim,OU=EDUCACION,DC=edu,DC=gva,DC=es
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+cn: albbiogim
+sn:: QklPU0NBIEdJTcOJTkVa
+givenName: ALBERTO
+initials: ABG
+distinguishedName: CN=albbiogim,OU=EDUCACION,DC=edu,DC=gva,DC=es
+instanceType: 0
+whenCreated: 20250901111858.0Z
+whenChanged: 20260323083948.0Z
+displayName:: QklPU0NBIEdJTcOJTkVaLCBBTEJFUlRP
+uSNCreated: 2029942
+memberOf: CN=ALU_FP_A3,OU=EDUCACION,DC=edu,DC=gva,DC=es
+memberOf: CN=GRP_46015290,OU=EDUCACION,DC=edu,DC=gva,DC=es
+uSNChanged: 163645423
+proxyAddresses: smtp:abg160571@apps.edu.gva.es
+proxyAddresses: SMTP:albbiogim@alu.edu.gva.es
+name: albbiogim
+objectGUID:: aNTH252x1U2FO5RDftdmgg==
+userAccountControl: 66048
+badPwdCount: 0
+codePage: 0
+countryCode: 0
+employeeID: 13318009C
+badPasswordTime: 134177759584870488
+lastLogon: 134195087711822349
+pwdLastSet: 134011991383975960
+primaryGroupID: 513
+objectSid:: AQUAAAAAAAUVAAAAafyDEj9a9heZ3ViHRXkRAA==
+accountExpires: 9223372036854775807
+logonCount: 480
+sAMAccountName: albbiogim
+division: 1
+sAMAccountType: 805306368
+userPrincipalName: albbiogim@alu.edu.gva.es
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=edu,DC=gva,DC=es
+dSCorePropagationData: 16010101000000.0Z
+mS-DS-ConsistencyGuid:: aNTH252x1U2FO5RDftdmgg==
+lastLogonTimestamp: 134187287759061527
+mail: albbiogim@alu.edu.gva.es
+msExchHideFromAddressLists: TRUE
+nIA: 11096280
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1

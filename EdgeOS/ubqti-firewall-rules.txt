@@ -1,0 +1,43 @@
+ssh -i /scripts/id_rsa -o "StrictHostKeyChecking no" -q -tt profe@192.168.10.100
+
+
+profe@ubnt# set firewall name telefonica_allow description 'allow telfonica network'
+profe@ubnt# set firewall name telefonica_allow rule 10 action accept
+profe@ubnt# set firewall name telefonica_allow rule 10 description 'allow to telefonica net'
+profe@ubnt# set firewall name telefonica_allow rule 10 log disable
+profe@ubnt# set firewall name gva_allow rule 10 log disable
+profe@ubnt# set firewall name telefonica_allow rule 10 protocol all
+profe@ubnt# set firewall name telefonica_allow rule 10 destination address 81.46.0.0/16
+profe@ubnt# set interfaces ethernet eth0 firewall in name telefonica_allow
+
+IN = LAN -> ROUTER_DECISION (Viene de la LAN)
+OUT = ROUTER_DECISION -> LAN (Va hacia la LAN)
+
+https://community.ui.com/questions/Laymans-firewall-explanation/2dafa379-3269-4749-b224-0dee15374de9
+
+profe@ubnt# set firewall name gva_es_allow description 'allow gva.es network'
+profe@ubnt# set firewall name gva_es_allow rule 10 action accept
+profe@ubnt# set firewall name gva_es_allow rule 10 description 'allow to gva.es network'
+profe@ubnt# set firewall name gva_es_allow rule 10 log disable
+profe@ubnt# set firewall name gva_es_allow rule 10 protocol all
+profe@ubnt# set firewall name gva_es_allow rule 10 destination address 10.110.0.0/16
+profe@ubnt# set interfaces ethernet eth0 firewall in name gva_es_allow
+
+
+profe@ubnt# set firewall name gva_es_allow description 'allow gva.es network'
+profe@ubnt# set firewall name gva_es_allow rule 10 action accept
+profe@ubnt# set firewall name gva_es_allow rule 10 description 'allow to gva.es network'
+profe@ubnt# set firewall name gva_es_allow rule 10 log disable
+profe@ubnt# set firewall name gva_es_allow rule 10 protocol all
+profe@ubnt# set firewall name gva_es_allow rule 10 destination address 10.110.0.0/16
+profe@ubnt# set interfaces ethernet eth0 firewall in name gva_es_allow
+
+
+set firewall name internetaula007 rule 12 action accept                   
+set firewall name internetaula007 rule 12 description 'gva int net'          
+set firewall name internetaula007 rule 12 log disable                     
+set firewall name internetaula007 rule 12 protocol all                    
+set firewall name internetaula007 rule 12 source address 10.0.0.0/8         
+set firewall name internetaula007 rule 12 state established enable        
+set firewall name internetaula007 rule 12 state new enable                
+set firewall name internetaula007 rule 12 state related enable  

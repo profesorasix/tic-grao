@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Carpetas compartidas profesor
+Comment=Carpetas compartidas profesor
+Exec=/usr/bin/caja smb://server
+Icon=/scripts/folder-network.png
+Terminal=false
+Type=Application
+Name[es_ES]=Carpetas del profesor

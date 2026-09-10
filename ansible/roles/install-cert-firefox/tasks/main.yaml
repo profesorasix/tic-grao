@@ -1,0 +1,35 @@
+---
+- name: Make sure the folder exists (Debian, Ubuntu)
+  ansible.builtin.file:
+    path: /etc/firefox/policies
+    state: directory
+
+- name: check that /etc/firefox/policies.json exists
+  ansible.builtin.stat:
+    path: /etc/firefox/policies/policies.json
+  register: stat_result
+
+- name: Append SecurityDevices to firefox policies file
+  ansible.builtin.blockinfile:    
+    marker: "// {mark} ANSIBLE MAGAGED BLOCK"
+    path: "/etc/firefox/policies/policies.json"
+    insertbefore: "DisableAppUpdate*"
+    block: |4
+              "SecurityDevices": {
+                  "p11-kit-trust": "/usr/lib/x86_64-linux-gnu/pkcs11/p11-kit-trust.so" 
+              },   
+  when: stat_result.stat.exists == true
+
+- name: Creates firefox policies file if no exists.
+  ansible.builtin.blockinfile: 
+    create: true   
+    path: "/etc/firefox/policies/policies.json"
+    block: |
+            {
+              "policies": {
+                "SecurityDevices": {
+                    "p11-kit-trust": "/usr/lib/x86_64-linux-gnu/pkcs11/p11-kit-trust.so"
+                }
+              }
+            }
+  when: stat_result.stat.exists == false

@@ -1,0 +1,16 @@
+---
+
+#- name: Backup /usr/lib/x86_64-linux-gnu/libnssckbi.so
+#  ansible.builtin.copy:
+#    src:  /usr/lib/x86_64-linux-gnu/libnssckbi.so
+#    dest: /usr/lib/x86_64-linux-gnu/libnssckbi.so.bak
+#    remote_src: true
+
+- name: Link p11-kit-trust.so to libnssckbi.so
+  ansible.builtin.file:
+    src: /usr/lib/x86_64-linux-gnu/pkcs11/p11-kit-trust.so    
+    dest: /usr/lib/x86_64-linux-gnu/libnssckbi.so
+    state: link
+    force: true
+
+  

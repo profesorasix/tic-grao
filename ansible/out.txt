@@ -1,0 +1,1140 @@
+firewall {
+    all-ping enable
+    broadcast-ping disable
+    group {
+    }
+    ipv6-receive-redirects disable
+    ipv6-src-route disable
+    ip-src-route disable
+    log-martians enable
+    name internetaula007 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 12 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 10.0.0.0/8
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.7.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.7.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula013 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 12 {
+            action accept
+            description gva_net
+            log disable
+            protocol all
+            source {
+                address 10.0.0.0/8
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.13.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.13.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula014 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.14.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.14.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula015 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.15.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.15.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula067 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.67.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.67.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula068 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.68.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.68.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula072 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.72.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.72.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula074 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.74.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.74.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula079 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.79.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.79.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula082 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.82.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.82.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name internetaula132 {
+        default-action accept
+        rule 10 {
+            action accept
+            description servidores
+            log disable
+            protocol all
+            source {
+                address 192.168.10.200-192.168.10.250
+            }
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            description accept_profe
+            destination {
+                address 192.168.132.101
+            }
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+        rule 30 {
+            action drop
+            description deny_clase
+            destination {
+                address 192.168.132.0/24
+            }
+            disable
+            log disable
+            protocol all
+            state {
+                established enable
+                new enable
+                related enable
+            }
+        }
+    }
+    name telefonica_allow {
+        default-action accept
+        description "allow telfonica network"
+        rule 10 {
+            action accept
+            description "allow to telefonica net"
+            destination {
+                address 81.46.0.0/16
+            }
+            log disable
+            protocol all
+        }
+    }
+    receive-redirects disable
+    send-redirects enable
+    source-validation disable
+    syn-cookies enable
+}
+interfaces {
+    ethernet eth0 {
+        address 192.168.10.100/24
+        duplex auto
+        firewall {
+            in {
+            }
+            local {
+            }
+        }
+        poe {
+            output off
+        }
+        speed auto
+        vif 1007 {
+            address 192.168.7.100/24
+            description VLAN1007AULA7
+            firewall {
+                out {
+                    name internetaula007
+                }
+            }
+            mtu 1500
+        }
+        vif 1013 {
+            address 192.168.13.100/24
+            description VLAN1013AULA13
+            firewall {
+                out {
+                    name internetaula013
+                }
+            }
+            mtu 1500
+        }
+        vif 1014 {
+            address 192.168.14.100/24
+            description VLAN1014AULA14
+            firewall {
+                out {
+                    name internetaula014
+                }
+            }
+            mtu 1500
+        }
+        vif 1015 {
+            address 192.168.15.100/24
+            description VLAN1015AULA15
+            firewall {
+                out {
+                    name internetaula015
+                }
+            }
+            mtu 1500
+        }
+        vif 1045 {
+            address 192.168.45.100/24
+            description VLAN1045TECNO45
+            mtu 1500
+        }
+        vif 1050 {
+            address 192.168.50.100/24
+            description VLAN1050RESTO
+            mtu 1500
+        }
+        vif 1067 {
+            address 192.168.67.100/24
+            description VLAN1067AULA67
+            firewall {
+                out {
+                    name internetaula067
+                }
+            }
+            mtu 1500
+        }
+        vif 1068 {
+            address 192.168.68.100/24
+            description VLAN1068AULA68
+            firewall {
+                out {
+                    name internetaula068
+                }
+            }
+            mtu 1500
+        }
+        vif 1072 {
+            address 192.168.72.100/24
+            description VLAN1072AULA72
+            firewall {
+                out {
+                    name internetaula072
+                }
+            }
+            mtu 1500
+        }
+        vif 1074 {
+            address 192.168.74.100/24
+            description VLAN1074AULA74
+            firewall {
+                out {
+                    name internetaula074
+                }
+            }
+            mtu 1500
+        }
+        vif 1078 {
+            address 192.168.78.100/24
+            description VLAN1078FCT
+            mtu 1500
+        }
+        vif 1079 {
+            address 192.168.79.100/24
+            description VLAN1079AULA79
+            firewall {
+                out {
+                    name internetaula079
+                }
+            }
+            mtu 1500
+        }
+        vif 1082 {
+            address 192.168.82.100/24
+            description VLAN1082AULA82
+            firewall {
+                out {
+                    name internetaula082
+                }
+            }
+            mtu 1500
+        }
+        vif 1132 {
+            address 192.168.132.100/24
+            description VLAN1132AULA132
+            firewall {
+                out {
+                    name internetaula132
+                }
+            }
+            mtu 1500
+        }
+        vif 1148 {
+            address 192.168.148.100/24
+            description VLAN1148AULA148
+            mtu 1500
+        }
+    }
+    ethernet eth1 {
+        address 172.29.20.11/24
+        duplex auto
+        poe {
+            output off
+        }
+        speed auto
+        vif 20 {
+            disable
+            firewall {
+                in {
+                }
+            }
+        }
+    }
+    ethernet eth2 {
+        duplex auto
+        poe {
+            output off
+        }
+        speed auto
+    }
+    ethernet eth3 {
+        duplex auto
+        poe {
+            output off
+        }
+        speed auto
+    }
+    ethernet eth4 {
+        duplex auto
+        poe {
+            output off
+        }
+        speed auto
+    }
+    loopback lo {
+    }
+    switch switch0 {
+        mtu 1500
+    }
+}
+protocols {
+    static {
+        route 0.0.0.0/0 {
+            next-hop 172.29.20.1 {
+                distance 1
+            }
+        }
+        route 10.0.10.0/24 {
+            next-hop 192.168.10.230 {
+                description ies-grao-net
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        disabled false
+        hostfile-update enable
+        shared-network-name DHCPAULA1007 {
+            authoritative disable
+            subnet 192.168.7.0/24 {
+                default-router 192.168.7.100
+                dns-server 192.168.10.100
+                domain-name ies
+                lease 86400
+                start 192.168.7.102 {
+                    stop 192.168.7.240
+                }
+                static-mapping aula007pc00aio {
+                    ip-address 192.168.7.101
+                    mac-address 00:e0:4c:04:ef:5b
+                }
+            }
+        }
+        shared-network-name DHCPAULA1013 {
+            authoritative disable
+            subnet 192.168.13.0/24 {
+                default-router 192.168.13.100
+                dns-server 192.168.10.100
+                domain-name aula13
+                lease 86400
+                start 192.168.13.120 {
+                    stop 192.168.13.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1014 {
+            authoritative disable
+            subnet 192.168.14.0/24 {
+                default-router 192.168.14.100
+                dns-server 192.168.10.100
+                domain-name aula14
+                lease 86400
+                start 192.168.14.120 {
+                    stop 192.168.14.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1015 {
+            authoritative disable
+            subnet 192.168.15.0/24 {
+                default-router 192.168.15.100
+                dns-server 192.168.10.100
+                domain-name aula15
+                lease 86400
+                start 192.168.15.120 {
+                    stop 192.168.15.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1067 {
+            authoritative disable
+            subnet 192.168.67.0/24 {
+                default-router 192.168.67.100
+                dns-server 192.168.10.100
+                domain-name aula67
+                lease 86400
+                start 192.168.67.120 {
+                    stop 192.168.67.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1068 {
+            authoritative disable
+            subnet 192.168.68.0/24 {
+                default-router 192.168.68.100
+                dns-server 192.168.10.100
+                domain-name ies
+                lease 86400
+                start 192.168.68.102 {
+                    stop 192.168.68.250
+                }
+                static-mapping aula068pc00 {
+                    ip-address 192.168.68.101
+                    mac-address c4:34:6b:75:77:52
+                }
+            }
+        }
+        shared-network-name DHCPAULA1072 {
+            authoritative disable
+            subnet 192.168.72.0/24 {
+                default-router 192.168.72.100
+                dns-server 192.168.10.100
+                domain-name aula72
+                lease 86400
+                start 192.168.72.120 {
+                    stop 192.168.72.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1074 {
+            authoritative disable
+            subnet 192.168.74.0/24 {
+                default-router 192.168.74.100
+                dns-server 192.168.10.100
+                domain-name ies
+                lease 86400
+                start 192.168.74.111 {
+                    stop 192.168.74.250
+                }
+            }
+        }
+        shared-network-name DHCPAULA1079 {
+            authoritative disable
+            subnet 192.168.79.0/24 {
+                default-router 192.168.79.100
+                dns-server 192.168.10.100
+                domain-name aula79
+                lease 86400
+                start 192.168.79.120 {
+                    stop 192.168.79.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1082 {
+            authoritative disable
+            subnet 192.168.82.0/24 {
+                default-router 192.168.82.100
+                dns-server 192.168.10.100
+                domain-name aula82
+                lease 86400
+                start 192.168.82.120 {
+                    stop 192.168.82.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1132 {
+            authoritative disable
+            subnet 192.168.132.0/24 {
+                default-router 192.168.132.100
+                dns-server 192.168.10.100
+                domain-name aula132
+                lease 86400
+                start 192.168.132.120 {
+                    stop 192.168.132.240
+                }
+            }
+        }
+        shared-network-name DHCPAULA1148 {
+            authoritative disable
+            subnet 192.168.148.0/24 {
+                default-router 192.168.148.100
+                dns-server 192.168.10.100
+                domain-name aula148
+                lease 86400
+                start 192.168.148.120 {
+                    stop 192.168.148.240
+                }
+            }
+        }
+        shared-network-name DHCPFCT1078 {
+            authoritative disable
+            subnet 192.168.78.0/24 {
+                default-router 192.168.78.100
+                dns-server 192.168.10.100
+                domain-name ies
+                lease 86400
+                start 192.168.78.101 {
+                    stop 192.168.78.250
+                }
+                static-mapping BRNB4220032E0C3 {
+                    ip-address 192.168.78.104
+                    mac-address b4:22:00:32:e0:c3
+                }
+            }
+        }
+        shared-network-name DHCPRESTO1050 {
+            authoritative disable
+            subnet 192.168.50.0/24 {
+                default-router 192.168.50.100
+                dns-server 192.168.10.100
+                domain-name ies
+                lease 86400
+                start 192.168.50.101 {
+                    stop 192.168.50.152
+                }
+            }
+        }
+        shared-network-name DHCPTECNO1045 {
+            authoritative disable
+            subnet 192.168.45.0/24 {
+                default-router 192.168.45.100
+                dns-server 192.168.10.100
+                domain-name ies
+                lease 86400
+                start 192.168.45.102 {
+                    stop 192.168.45.250
+                }
+            }
+        }
+        shared-network-name redtroncal {
+            authoritative disable
+            disable
+            subnet 192.168.10.0/24 {
+                default-router 192.168.10.100
+                dns-server 192.168.10.100
+                lease 86400
+                start 192.168.10.2 {
+                    stop 192.168.10.99
+                }
+            }
+        }
+        static-arp disable
+        use-dnsmasq disable
+    }
+    dns {
+        forwarding {
+            cache-size 5000
+            listen-on eth0
+            listen-on eth0.1078
+            listen-on eth0.1007
+            listen-on eth0.1067
+            listen-on eth0.1074
+            listen-on eth0.1045
+            listen-on eth0.1068
+            listen-on eth0.1013
+            listen-on eth0.1014
+            listen-on eth0.1015
+            listen-on eth0.1050
+            listen-on eth0.1072
+            listen-on eth0.1079
+            listen-on eth0.1082
+            listen-on eth0.1132
+            listen-on eth0.1148
+            name-server 10.239.3.7
+            name-server 10.239.3.8
+            options server=/grao/10.0.10.11
+            options server=/ies.grao/10.0.10.12
+        }
+    }
+    gui {
+        http-port 80
+        https-port 443
+        older-ciphers enable
+    }
+    nat {
+        rule 5000 {
+            description NatSalida
+            destination {
+            }
+            log disable
+            outbound-interface eth1
+            protocol all
+            source {
+            }
+            type masquerade
+        }
+    }
+    snmp {
+        community zabbix@admin {
+            authorization ro
+        }
+    }
+    ssh {
+        port 22
+        protocol-version v2
+    }
+    unms {
+        disable
+    }
+}
+system {
+    analytics-handler {
+        send-analytics-report false
+    }
+    conntrack {
+        expect-table-size 4096
+        hash-size 4096
+        table-size 32768
+        tcp {
+            half-open-connections 512
+            loose enable
+            max-retrans 3
+        }
+    }
+    crash-handler {
+        send-crash-report false
+    }
+    host-name ubnt
+    login {
+        user adminrouter {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+            level admin
+        }
+        user profe {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+                public-keys root@proxmox {
+                    key ****************
+                    type ssh-rsa
+                }
+            }
+            full-name profesor
+            level admin
+        }
+        user ubnt {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+            level admin
+        }
+    }
+    name-server 172.16.99.119
+    name-server 172.16.99.121
+    ntp {
+        server 0.ubnt.pool.ntp.org {
+        }
+        server 1.ubnt.pool.ntp.org {
+        }
+        server 2.ubnt.pool.ntp.org {
+        }
+        server 3.ubnt.pool.ntp.org {
+        }
+    }
+    offload {
+        hwnat disable
+        ipsec enable
+        ipv4 {
+            bonding enable
+            forwarding enable
+            gre enable
+            pppoe enable
+            vlan enable
+        }
+        ipv6 {
+            forwarding enable
+            pppoe disable
+            vlan enable
+        }
+    }
+    static-host-mapping {
+        host-name proxmoxgrao.ies {
+            alias proxmoxgrao
+            inet 192.168.10.250
+        }
+        host-name router.ies {
+            alias router
+            inet 192.168.10.100
+        }
+        host-name rpiausencias.ies {
+            alias rpiausencias
+            inet 192.168.10.248
+        }
+        host-name scobre.ies {
+            alias scobre
+            inet 192.168.10.253
+        }
+        host-name sfibra.ies {
+            alias sfibra
+            inet 192.168.10.254
+        }
+        host-name sharefolder.ies {
+            alias sharefolder
+            inet 192.168.10.200
+        }
+        host-name wifi.ies {
+            alias wifi
+            inet 192.168.74.101
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level notice
+            }
+            facility protocols {
+                level debug
+            }
+        }
+    }
+    time-zone UTC
+}

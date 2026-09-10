@@ -1,0 +1,15 @@
+- name: Add virtualbox repo using key from URL
+  ansible.builtin.deb822_repository:
+    name: vbox
+    types: deb
+    uris: https://download.virtualbox.org/virtualbox/debian
+    suites: 'noble'
+    components: contrib
+    architectures: amd64
+    signed_by: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+- name: Install virtualbox packages
+  ansible.builtin.apt:
+    update_cache: yes
+    state: present
+    pkg: virtualbox

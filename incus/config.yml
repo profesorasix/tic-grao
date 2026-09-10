@@ -1,11 +1,21 @@
 default-remote: incus-os
 remotes:
+  examen:
+    addr: https://192.168.82.205:8443
+    protocol: incus
+    public: true
+  examen_auth:
+    addr: https://192.168.82.205:8443
+    auth_type: tls
+    project: default
+    protocol: incus
+    public: false
   images:
     addr: https://images.linuxcontainers.org
     protocol: simplestreams
     public: true
   incus-os:
-    addr: https://192.168.15.196:8443
+    addr: https://192.168.10.230:8443
     auth_type: tls
     project: default
     protocol: incus

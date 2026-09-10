@@ -10,6 +10,6 @@
 
 - name: Install incus packages
   ansible.builtin.apt:
-    update_cache: no
+    update_cache: yes
     state: latest
     pkg: incus

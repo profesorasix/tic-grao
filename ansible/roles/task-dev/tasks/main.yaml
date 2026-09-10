@@ -1,6 +1,6 @@
 - name: Add task-dev repo using key from URL
   ansible.builtin.deb822_repository:
-    name: task-task
+    name: taskdev
     types: deb
     uris: https://dl.cloudsmith.io/public/task/task/deb/linuxmint
     suites: 'wilma'
@@ -10,6 +10,6 @@
 
 - name: Install task-dev packages
   ansible.builtin.apt:
-    update_cache: no
+    update_cache: yes
     state: present
     pkg: task

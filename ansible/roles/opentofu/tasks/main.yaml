@@ -1,0 +1,16 @@
+- name: Add OpenTofu repo using key from URL
+  ansible.builtin.deb822_repository:
+    name: opentofu
+    types: deb
+    uris:  https://packages.opentofu.org/opentofu/tofu/any/
+    suites: 'any'
+    components: main
+    architectures: amd64
+    #signed_by: https://get.opentofu.org/opentofu.gpg
+    signed_by: https://packages.opentofu.org/opentofu/tofu/gpgkey
+
+- name: Install OpenTofu
+  ansible.builtin.apt:
+    update_cache: yes
+    state: latest
+    pkg: tofu

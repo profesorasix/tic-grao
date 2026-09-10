@@ -1,0 +1,61 @@
+# extended LDIF
+#
+# LDAPv3
+# base <CN=c.sanchezgarcia2,OU=EDUCACION,DC=edu,DC=gva,DC=es> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# c.sanchezgarcia2, EDUCACION, edu.gva.es
+dn: CN=c.sanchezgarcia2,OU=EDUCACION,DC=edu,DC=gva,DC=es
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+cn: c.sanchezgarcia2
+sn: SANCHEZ GARCIA
+givenName: CARLOS
+initials: CSG
+distinguishedName: CN=c.sanchezgarcia2,OU=EDUCACION,DC=edu,DC=gva,DC=es
+instanceType: 0
+whenCreated: 20211026081728.0Z
+whenChanged: 20260323103121.0Z
+displayName: SANCHEZ GARCIA, CARLOS
+uSNCreated: 1792339
+memberOf: CN=Docente_A3,OU=EDUCACION,DC=edu,DC=gva,DC=es
+memberOf: CN=GRP_46015290,OU=EDUCACION,DC=edu,DC=gva,DC=es
+uSNChanged: 164081524
+company: 46015290 - IES EL GRAO
+proxyAddresses: smtp:csg225209@apps.edu.gva.es
+proxyAddresses: SMTP:c.sanchezgarcia2@edu.gva.es
+name: c.sanchezgarcia2
+objectGUID:: CYw/PqVYF02XF11izl+LCw==
+userAccountControl: 66048
+badPwdCount: 0
+codePage: 0
+countryCode: 0
+employeeID: 18993341X
+badPasswordTime: 134193428065529091
+lastLogon: 134194979058789595
+pwdLastSet: 133087429151302628
+primaryGroupID: 513
+objectSid:: AQUAAAAAAAUVAAAAafyDEj9a9heZ3ViHKq4DAA==
+accountExpires: 9223372036854775807
+logonCount: 844
+sAMAccountName: c.sanchezgarcia2
+division: 1
+sAMAccountType: 805306368
+userPrincipalName: c.sanchezgarcia2@edu.gva.es
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=edu,DC=gva,DC=es
+dSCorePropagationData: 16010101000000.0Z
+mS-DS-ConsistencyGuid:: CYw/PqVYF02XF11izl+LCw==
+lastLogonTimestamp: 134187354678633594
+mail: c.sanchezgarcia2@edu.gva.es
+msExchHideFromAddressLists: FALSE
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1

@@ -1,0 +1,23 @@
+---
+- hosts: all
+  
+  vars_prompt:
+    - name: new_user_password_encrypted
+      prompt: Please enter the new user password
+      private: true
+      encrypt: sha512_crypt
+      confirm: true
+      unsafe: true  
+      
+  become: true
+  #remote_user: administrador
+
+  tasks:
+    - name: Create a user 'examen' with a home directory
+      ansible.builtin.user:
+        name: examen
+        password: "$1$-1$sCufXDdXmuiSyoibJPaQC1"  #salted password for examen
+        # openssl passwd -salt <salt> -1 <plaintext>
+        create_home: yes
+
+  

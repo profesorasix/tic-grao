@@ -1,0 +1,2 @@
+ldapsearch -H ldap://ldapad.edu.gva.es -b dc=edu,dc=gva,dc=es -w uLt8w_uf -D cn=consulta_DA,ou=educacion,dc=edu,dc=gva,dc=es
+

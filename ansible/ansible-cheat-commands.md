@@ -19,6 +19,8 @@ EOF
 
 
 # ANSIBLE
+ansible-playbook -i inventory/inventory.yaml playbooks/test-playbooks/incus_init_playbook.yml -u administrador -b --ask-become-pass --limit aula13 [eno1]
+
 ansible aula13 -i inventory/inventory.yaml -m community.general.shutdown --ask-become-pass --become
 ansible all -i <ip>, -u administrador -m ping  #ansible without specifying the inventory
 ansible-playbook -i <ip>, -u administrador playbook.yml #ansible without specifying the inventory
@@ -33,6 +35,8 @@ ansible --connection=local localhost -m ping
 ansible 127.0.0.1 -m ansible.builtin.setup
 ansible-playbook -i localhost, --connection=local site.yml 
 ansible-playbook --connection=local 127.0.0.1 playbook.yml
+ansible 127.0.0.1 -m ansible.builtin.setup
+ansible-playbook -c local -i localhost, ini.yaml
 
 # APT
 ansible myhosts -i inventory.yaml -u administrador --become -m apt -a name=python3-debian --ask-become-pass 

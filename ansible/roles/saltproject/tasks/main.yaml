@@ -1,0 +1,28 @@
+- name: Add saltproject repo using key from URL
+  ansible.builtin.deb822_repository:
+    name: salt
+    types: deb
+    uris:  https://packages.broadcom.com/artifactory/saltproject-deb
+    suites: 'stable'
+    components: main
+    architectures: amd64
+    signed_by: https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public
+
+
+- name: Install salt-minion
+  ansible.builtin.apt:
+    update_cache: yes
+    state: latest
+    pkg: salt-minion
+
+- name: Configure salt-minion 
+  ansible.builtin.copy:
+    content: |
+        master: salt-master.ies.grao
+    dest: /etc/salt/minion.d/master.conf
+
+- name: Enable & start service
+  ansible.builtin.service:
+    name: salt-minion
+    state: started
+    enabled: yes
