@@ -21,6 +21,44 @@ mensaje="/scripts/mensaje.txt"
 # remove private key from script folder
 rm -rf /scripts/id_rsa
 
+echo "#############################################################################"
+echo "Empieza la configuración del equipo:`date`"
+echo "#############################################################################"
+
+
+####################
+# Set hostname
+###################
+
+######################
+# Ask for classroom number
+######################
+
+echo "# Configurando número aula" > $mensaje
+
+
+aula="$(get_classroom)"
+
+echo "Aula: $aula"
+####################
+# Ask for pc number
+####################
+
+echo "# Configurando número PC" > $mensaje
+# Elejimos el número de PC
+
+pc="$(get_pc_number)"
+
+echo "PC:$pc"
+
+#aulaXXXpcXX format for hostname
+nombre_equipo=aula$(printf %03d $aula)pc$(printf %02d $pc)
+
+echo "Nombre del equipo:$nombre_equipo"
+
+echo "Cambiando nombre de equipo"
+hostnamectl set-hostname $nombre_equipo
+
 ##################
 # Install packages
 ##################
@@ -74,43 +112,6 @@ echo "${ssh_grao_pub//[$'\n'$'\t']}" >> /home/administrador/.ssh/authorized_keys
 echo "# Iniciando proceso de configuración" > $mensaje
 
 
-echo "#############################################################################"
-echo "Empieza la configuración del equipo:`date`"
-echo "#############################################################################"
-
-
-####################
-# Set hostname
-###################
-
-######################
-# Ask for classroom number
-######################
-
-echo "# Configurando número aula" > $mensaje
-
-
-aula="$(get_classroom)"
-
-echo "Aula: $aula"
-####################
-# Ask for pc number
-####################
-
-echo "# Configurando número PC" > $mensaje
-# Elejimos el número de PC
-
-pc="$(get_pc_number)"
-
-echo "PC:$pc"
-
-#aulaXXXpcXX format for hostname
-nombre_equipo=aula$(printf %03d $aula)pc$(printf %02d $pc)
-
-echo "Nombre del equipo:$nombre_equipo"
-
-echo "Cambiando nombre de equipo"
-hostnamectl set-hostname $nombre_equipo
 
 # cuando cambias el hostname no va la interfaz grafica de sudo hasta que reinicias
 

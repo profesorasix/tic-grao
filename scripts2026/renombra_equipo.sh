@@ -257,6 +257,13 @@ echo "añade las lineas de host"
 echo "127.0.0.1 $nombreequipo # linea_configuracion " | tee -a /etc/hosts > /dev/null
 echo "$server server # linea_configuracion " | tee -a /etc/hosts > /dev/null
 
+
+##################
+# Update minion_id
+###################
+
+echo $nombreequipo > /etc/salt/minion_id
+
 echo "cambiando nfs"
 
 if [ $aulasinceros -eq 13 ]; then

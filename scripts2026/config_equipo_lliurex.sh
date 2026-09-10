@@ -14,57 +14,6 @@
 #include util functions
 . /scripts/util.sh
 
-##################
-# Install packages
-##################
-
-# Official repo
-apt-get update
-sudo apt-get install -y aptitude traceroute gpg git epoptes openssl openssh-server autofs
-
-# saltstack project repository
-
-# Ensure keyrings dir exists
-mkdir -m 755 -p /etc/apt/keyrings
-# Download public key
-curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | gpg --dearmor | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp > /dev/null
-# Create apt repo target configuration
-curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
-
-apt-get update
-apt-get install -y salt-minion
-echo "master: salt-master.ies.grao" > /etc/salt/minion.d/master.conf
-systemctl enable salt-minion && systemctl start salt-minion
-
-###############################
-# Add adminstrador user as sudo
-###############################
-
-#MD5 password
-useradd -d /home/administrador -G sudo -m -p '$1$ZepJ2mlF$At8rJFaE7q5tqYppo.TyY.' administrador
-
-################################
-# Add public ssh key
-################################
-ssh_grao_pub='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCywyyt8I3qy2WFOxoeJzpE5uG5/vdLG
-bsPyJ8Ko7nblXNcAmRR2mcDbqUwZ3oq3HbdAEIMxyBV5c1KPhhvBi8VbKmY+sVV6zxLtg7ySsZNFP3i4bl8
-OaUTPdk4RbfwistbDaDd84W01Thrfn9bIPx+oLE1mk+UIQem32y0JS7H/oWFPisnOzXeG4XmvClpdoWgWU0
-Hf/RK1HAz+XSK9Gy5M4q8vGCxauK4ZMs2cB53wbRCS4EHdcjfcB/AU0rFPlk2uTXw900MMiDI0TvWjO4VZB
-VxyA3J7QqYOFp9KzeCFx6j6RsYbgCBHHxEAiPngbvADYDCing772qwk2pRziE2LlGWjNL2OL3gZUa5QJRPO
-yko837e+nnpx2t9ji5LSPryPzQ1dAluZgV8dnSM3yjJpPhsf6D0lCMI1/SsKcAqmNAleFF2hLUT9maZ8Psz
-hNoBwU7IcPY9QdSAgXVkcVl/udCV1c4d/iJXlJzfoIOgLhLN1rBsyA1plbsFQRBcrdM= carlossg@aulaxxxpczz'
-
-##remove all characters (\t,\n\) from variable
-mkdir -p /home/administrador/.ssh/
-echo "${ssh_grao_pub//[$'\n'$'\t']}" >> /home/administrador/.ssh/authorized_keys
-
-############################
-# Add shutdown task at 22:30
-############################
-
-(crontab -l 2>/dev/null; echo "30 22 * * * /sbin/shutdown -P now") | crontab -
-
-
 
 # variables usadas el el script
 aulasinconfig="aulaxxxpc" # Nombre del pc cuando se acaba de clonar
@@ -129,6 +78,58 @@ echo "PC:$pc"
 nombre_equipo=aula$(printf %03d $aula)pc$(printf %02d $pc)
 
 echo "Nombre del equipo:$nombre_equipo"
+
+
+##################
+# Install packages
+##################
+
+# Official repo
+apt-get update
+sudo apt-get install -y aptitude traceroute gpg git epoptes openssl openssh-server autofs
+
+# saltstack project repository
+
+# Ensure keyrings dir exists
+mkdir -m 755 -p /etc/apt/keyrings
+# Download public key
+curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | gpg --dearmor | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp > /dev/null
+# Create apt repo target configuration
+curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
+
+apt-get update
+apt-get install -y salt-minion
+echo "master: salt-master.ies.grao" > /etc/salt/minion.d/master.conf
+systemctl enable salt-minion && systemctl start salt-minion
+
+###############################
+# Add adminstrador user as sudo
+###############################
+
+#MD5 password
+useradd -d /home/administrador -G sudo -m -p '$1$ZepJ2mlF$At8rJFaE7q5tqYppo.TyY.' administrador
+
+################################
+# Add public ssh key
+################################
+ssh_grao_pub='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCywyyt8I3qy2WFOxoeJzpE5uG5/vdLG
+bsPyJ8Ko7nblXNcAmRR2mcDbqUwZ3oq3HbdAEIMxyBV5c1KPhhvBi8VbKmY+sVV6zxLtg7ySsZNFP3i4bl8
+OaUTPdk4RbfwistbDaDd84W01Thrfn9bIPx+oLE1mk+UIQem32y0JS7H/oWFPisnOzXeG4XmvClpdoWgWU0
+Hf/RK1HAz+XSK9Gy5M4q8vGCxauK4ZMs2cB53wbRCS4EHdcjfcB/AU0rFPlk2uTXw900MMiDI0TvWjO4VZB
+VxyA3J7QqYOFp9KzeCFx6j6RsYbgCBHHxEAiPngbvADYDCing772qwk2pRziE2LlGWjNL2OL3gZUa5QJRPO
+yko837e+nnpx2t9ji5LSPryPzQ1dAluZgV8dnSM3yjJpPhsf6D0lCMI1/SsKcAqmNAleFF2hLUT9maZ8Psz
+hNoBwU7IcPY9QdSAgXVkcVl/udCV1c4d/iJXlJzfoIOgLhLN1rBsyA1plbsFQRBcrdM= carlossg@aulaxxxpczz'
+
+##remove all characters (\t,\n\) from variable
+mkdir -p /home/administrador/.ssh/
+echo "${ssh_grao_pub//[$'\n'$'\t']}" >> /home/administrador/.ssh/authorized_keys
+
+############################
+# Add shutdown task at 22:30
+############################
+
+(crontab -l 2>/dev/null; echo "30 22 * * * /sbin/shutdown -P now") | crontab -
+
 
 #########################################################
 # assign static ip based on its position in the classroom
